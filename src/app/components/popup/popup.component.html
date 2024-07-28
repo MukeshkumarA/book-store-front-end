@@ -1,0 +1,11 @@
+<div class="bg-white rounded-md shadow-lg px-10 py-5 relative" [ngStyle]="{'width': dialogRef._containerInstance._config.width}">
+    <button class="absolute top-2 right-2 px-3 bg-gray-400 shadow-2xl rounded-sm text-white hover:text-gray-900" (click)="onCancel()">X</button>
+    <ng-content>
+        {{data.content}}
+    </ng-content>
+    <div class="flex justify-end mt-6">
+      <button class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium py-2 px-4 tex-xl rounded mr-2" (click)="onCancel()">Cancel</button>
+      <button class="bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded" (click)="onConfirm()">OK</button>
+    </div>
+  </div>
+  

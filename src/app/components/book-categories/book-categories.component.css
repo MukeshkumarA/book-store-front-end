@@ -1,0 +1,7 @@
+.svg-outer:hover {
+    .svg-icon {
+        fill: #fff!important;
+        stroke: #fff;
+    }
+
+}

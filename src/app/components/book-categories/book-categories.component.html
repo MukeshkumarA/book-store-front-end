@@ -1,0 +1,134 @@
+<!-- <div *ngFor="let genre of bookGenres" class="my-10">
+    <div *ngIf="genre">
+        <div class="mx-20 text-center mt-14">
+            <h5 class="">{{ genre }}</h5>
+        </div>
+
+        <div *ngFor="let book of booksGenre.get(genre)" class="flex flex-wrap mx-[11%] w-full">
+            <!-- <div *ngFor="let n of [1, 2, 3, 4]">
+            <div class="flex flex-col items-cente bg-white border-none rounded shadow-md m-4" (click)="goToDetails(book.id)">
+                <div class="w-[270px] h-[200px] flex items-center justify-center">
+                    <div class="flex items-center justify-center p-1" style="width: calc(100% - 20%); height: calc(100% - 20%);">
+                        <!-- <img class="object-contain max-w-full max-h-full" src="https://m.media-amazon.com/images/I/61HAE8zahLL._AC_UF1000,1000_QL80_.jpg" [alt]="book.title" />
+                        <img class="object-contain max-w-full max-h-full" [src]="book.sanitizedImageData" [alt]="book.title" />
+                    </div>
+                </div>
+                <div class="meta  items-center text-left pl-5">
+                    <div class="text-ellipsis overflow-hidden ">{{ book.title }}</div>
+                    <div class="text-[#AE001D] text-transform: capitalize tracking-widesttext-ellipsis overflow-hidden text-[18px]"><span class="text-transform: lowercase text-[15px]">by </span>{{ book.author }}</div>
+                    <div class="text-[16px]"> <span class="font-semibold">₹</span> {{ book.price }}</div>
+                </div>
+                <!-- <div class="flex justify-around w-[100%] p-5 bg-[#F3F5F2] rounded-b-md">
+                    <div class="text-[17px] text-[#CD6D17] cursor-pointer">Add to cart</div> 
+                </div>
+            </div>
+            </div>
+        </div>
+    </div>
+  </div>
+   -->
+
+<!-- <ng-container>
+    <div class="mx-[15%]">
+    <div *ngFor="let genre of bookGenres" class="">
+      <div *ngIf="genre">
+        <div class=" mt-14">
+          <h5 class="text-2xl font-medium capitalize">{{ genre.toLowerCase() }}</h5>
+          <hr>
+        </div>
+        <div class="w-[100%] flex overflow-x-auto">
+          <div *ngFor="let book of booksGenre.get(genre); let i = index" class="book-container text-xl mt-5 mr-10">
+              <app-book-card [book]="book" (addToCart)="addBookToCart($event)" (navigatBook)="navigateToBookDetails($event)"></app-book-card>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+</ng-container> -->
+
+
+<ng-container>
+  <div class="mx-[15%] pb-[5%]">
+    <div *ngFor="let genre of bookGenres" class="genre-section">
+      <div *ngIf="genre">
+        <div class="mt-14 mb-3 flex justify-between">
+          <div class="text-2xl font-thin capitalize">{{ genre.toLowerCase() }}</div>
+          <div class="px-10 flex">
+            <div class="svg-outer cursor-pointer w-[40px] h-[40px] flex justify-center items-center hover:bg-[#CD6D17] hover:border-none border rounded-full border-[#DCDCDC]" (click)="scrollLeft(books)">
+              <svg xmlns="http://www.w3.org/2000/svg" class="svg-icon" width="20" height="20" fill="#333333"
+                viewBox="0 0 1024 1024" version="1.1">
+                <path
+                  d="M640 832a21.333333 21.333333 0 0 1-15.146667-6.186667l-298.666666-298.666666a21.333333 21.333333 0 0 1 30.293333-30.293334l298.666667 298.666667a21.333333 21.333333 0 0 1 0 30.293333A21.333333 21.333333 0 0 1 640 832z" />
+                <path
+                  d="M341.333333 533.333333a21.333333 21.333333 0 0 1-15.146666-6.186666 21.333333 21.333333 0 0 1 0-30.293334l298.666666-298.666666a21.333333 21.333333 0 0 1 30.293334 30.293333l-298.666667 298.666667A21.333333 21.333333 0 0 1 341.333333 533.333333z" />
+              </svg>
+            </div>
+
+            <div class="svg-outer cursor-pointer w-[40px] h-[40px] flex justify-center ml-2 items-center border rounded-full border-[#DCDCDC] hover:bg-[#CD6D17] hover:border-none" (click)="scrollRight(books)">
+              <svg xmlns="http://www.w3.org/2000/svg" class="svg-icon" width="20" height="20" fill="#333333"
+                viewBox="0 0 1024 1024" version="1.1">
+                <path
+                  d="M682.666667 533.333333a21.333333 21.333333 0 0 1-15.146667-6.186666l-298.666667-298.666667a21.333333 21.333333 0 0 1 30.293334-30.293333l298.666666 298.666666a21.333333 21.333333 0 0 1 0 30.293334A21.333333 21.333333 0 0 1 682.666667 533.333333z" />
+                <path
+                  d="M384 832a21.333333 21.333333 0 0 1-15.146667-6.186667 21.333333 21.333333 0 0 1 0-30.293333l298.666667-298.666667a21.333333 21.333333 0 0 1 30.293333 30.293334l-298.666666 298.666666A21.333333 21.333333 0 0 1 384 832z" />
+              </svg>
+            </div>
+          </div>
+        </div>
+        <hr>
+        <div class="w-full overflow-x-auto whitespace-nowrap my-5 no-scrollbar"  #books>
+          <div class="flex space-x-20">
+            <div *ngFor="let book of booksGenre.get(genre); let i = index" class="book-container text-xl mt-5">
+              <app-book-card [book]="book" (addToCart)="addBookToCart($event)"
+                (navigatBook)="navigateToBookDetails($event)"></app-book-card>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>
+
+
+
+<!-- <div class="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow-md m-4 w-[270px]">
+            <div class="w-full h-[200px] flex items-center justify-center cursor-pointer">
+              <div class="flex items-center justify-center p-1 w-[90%]">
+                <img class="object-contain max-w-full max-h-full" [src]="book.sanitizedImageData" alt="{{ book.title }} cover image" />
+              </div>
+            </div>
+            <div class="meta items-start text-left p-4 w-full cursor-pointer">
+              <div class="text-ellipsis overflow-hidden whitespace-nowrap">{{ book.title }}</div>
+              <div class="text-[#AE001D] tracking-wide text-ellipsis overflow-hidden whitespace-nowrap text-[18px]">
+                <span class="text-gray-600 text-[15px]">by </span>{{ book.author }}
+              </div>
+              <div class="text-[16px]">
+                <span class="font-semibold">₹</span> {{ book.price }}
+              </div>
+            </div>
+          </div> -->
+
+
+<!-- <div class="bg-white border-none rounded-lg shadow-md m-4 transform-sm transition-transform transform hover:scale-105">
+                <div class="bg-white p-5 flex flex-col w-[200px] h-[250px] rounded-lg" (click)="goToDetails(book.id)">
+                    <div class="w-full h-2/3 flex justify-center">
+                        <img class="max-w-full object-cover" [src]="book.sanitizedImageData" alt="{{ book.title }} cover image" />
+                    </div>
+                    <div class="mt-2 text-center">
+                        <div class="text-ellipsis overflow-hidden ">{{ book.title }}</div>
+                        <div class="text-[#AE001D] text-transform: capitalize tracking-widesttext-ellipsis overflow-hidden text-[18px]"><span class="text-transform: lowercase text-[15px]">by </span>{{ book.author }}</div>
+                        <!-- <div class="text-[16px]"> <span class="font-semibold">₹</span> {{ book.price }}</div> 
+                    </div>
+                </div>
+            </div> -->
+
+
+
+
+
+<!-- <div *ngFor="let n of [1, 2, 3, 4]">   
+</div> -->
+
+<!-- <div class="flex justify-around w-[100%] p-5 bg-[#F3F5F2] rounded-b-md">
+                    <div class="text-[17px] text-[#CD6D17] cursor-pointer">Add to cart</div> 
+                </div> -->

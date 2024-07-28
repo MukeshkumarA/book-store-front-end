@@ -1,0 +1,12 @@
+<div class="stars">
+    <ng-container *ngFor="let _ of fullStars">
+        <i class="star full">&#9733;</i>
+    </ng-container>
+    <i *ngIf="partialStarWidth > 0" class="star partial">
+      <div class="partial-fill" [style.width.%]="partialStarWidth">&#9733;</div>
+      <div class="partial-empty">&#9733;</div>
+    </i>
+    <ng-container *ngFor="let _ of emptyStars">
+      <i class="star empty">&#9733;</i>
+    </ng-container>
+  </div>

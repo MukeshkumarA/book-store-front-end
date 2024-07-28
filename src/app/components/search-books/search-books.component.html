@@ -1,0 +1,36 @@
+<!-- <div class="flex justify-center items-center mt-10">
+    <div class="w-[70%] flex items-stretch">
+        <input class="w-full py-2 px-3 outline-none rounded border border-gray-300 focus:border-black transition-all duration-200"
+               type="text" 
+               placeholder="Search by title..." 
+               [(ngModel)]="searchedText"
+               hover:border-indigo-500
+               hover:ring-2
+               hover:ring-indigo-200
+               hover:ring-opacity-50
+               />
+    </div>
+    <div class="flex items-stretch ml-2">
+        <button class="btn  bg-black text-white py-2 px-4 rounded hover:bg-gray-800 hover:text-gray-200 transition-colors duration-200">Search</button>
+        <button class="btn bg-black text-white py-2 px-4 ml-2 rounded hover:bg-gray-800 hover:text-gray-200 transition-colors duration-200">Search by Author</button>
+    </div>
+</div> -->
+
+<div class="flex justify-center items-center mt-12 mb-5">
+    <div class="w-[50%] flex items-stretch relative">
+        <div class="absolute inset-y-0 left-0 flex items-center pl-3">
+            <i class="fa fa-search"></i>
+        </div>
+        <input class="w-full py-3 pl-10 outline-none rounded border border-gray-300 focus:border-black transition-all duration-200"
+               type="text" 
+               placeholder="Search by title..." 
+               [(ngModel)]="searchedText"
+               (input)="onSearchByTitle()"
+               />
+    </div>
+    <div class="flex items-stretch ml-2 space-x-2 search-btns">
+        <button class="" (click)="onSearchByTitle()">Search</button>
+        <button class="" (click)="onSearchByAuthor()">Search by Author</button>
+    </div>
+</div>
+

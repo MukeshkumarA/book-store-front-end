@@ -1,0 +1,82 @@
+<div class="signup-container p-4">
+  <div class="mb-8 text-center flex justify-center relative">
+    <div class="text-3xl">Sign Up</div>
+    <div class="absolute right-0 -top-5 font-mono text-xl px-3 py-1 mb-5 shadow-lg rounded-sm cursor-pointer"
+      (click)="ClosePopup()">
+      X
+    </div>
+  </div>
+  <form #signupForm="ngForm" (ngSubmit)="onSubmit(signupForm)" class="space-y-4 px-2 max-h-[70vh]">
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <div class="flex flex-col">
+        <label for="firstName" class="text-gray-700">First Name</label>
+        <input type="text" id="firstName" name="firstName" [(ngModel)]="signupData.firstName" required
+          #firstNameInput="ngModel" class="w-full p-2 border border-gray-300 rounded" />
+        <span class="text-red-500 text-sm mt-1 font-medium"
+          *ngIf="firstNameInput.invalid && firstNameInput.touched">First Name is required!</span>
+      </div>
+      <div class="flex flex-col">
+        <label for="lastName" class="text-gray-700">Last Name</label>
+        <input type="text" id="lastName" name="lastName" [(ngModel)]="signupData.lastName" required
+          #lastNameInput="ngModel" class="w-full p-2 border border-gray-300 rounded" />
+        <span class="text-red-500 text-sm mt-1 font-medium" *ngIf="lastNameInput.invalid && lastNameInput.touched">Last
+          Name is required!</span>
+      </div>
+      <div class="flex flex-col">
+        <label for="email" class="text-gray-700">Email</label>
+        <input type="email" id="email" name="email" [(ngModel)]="signupData.email" required #emailInput="ngModel"
+          pattern="[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$"
+          class="w-full p-2 border border-gray-300 rounded" />
+        <span class="text-red-500 text-sm mt-1 font-medium" *ngIf="!emailInput.value && emailInput.touched">Email is
+          required!</span>
+        <span class="text-red-500 text-sm mt-1 font-medium"
+          *ngIf="emailInput.value && !emailInput.valid && emailInput.touched">Email is not valid!</span>
+      </div>
+      <div class="flex flex-col">
+        <label for="password" class="text-gray-700">Password</label>
+        <input type="password" id="password" name="password" [(ngModel)]="signupData.password" required
+          #passwordInput="ngModel" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,12}$"
+          class="w-full p-2 border border-gray-300 rounded" />
+        <span class="text-red-500 text-sm mt-1 font-medium"
+          *ngIf="!passwordInput.value && passwordInput.touched">Password is required!</span>
+        <span class="text-red-500 text-sm mt- font-medium"
+          *ngIf="passwordInput.value && !passwordInput.valid && passwordInput.touched">Must be 8-12 characters long, with upper/lowercase letters & numbers.</span>
+      </div>
+      <div class="flex flex-col">
+        <label for="confirmPassword" class="text-gray-700">Confirm Password</label>
+        <input type="password" id="confirmPassword" name="confirmPassword" [(ngModel)]="confirmPassword" required
+          #confirmPasswordInput="ngModel" class="w-full p-2 border border-gray-300 rounded" />
+
+        <span class="text-red-500 text-sm mt-1 font-medium"
+          *ngIf="!confirmPasswordInput.value && confirmPasswordInput.touched">Confirm Password is required!</span>
+        <span class="text-red-500 text-sm mt-1 font-medium"
+          *ngIf="confirmPasswordInput.value && confirmPasswordInput.value != signupData.password && confirmPasswordInput.touched">Password not matched!</span>
+      </div>
+      <div class="flex flex-col">
+        <label for="address" class="text-gray-700">Address</label>
+        <input type="text" id="address" name="address" [(ngModel)]="signupData.address" required #addressInput="ngModel"
+          class="w-full p-2 border border-gray-300 rounded" />
+        <span class="text-red-500 text-sm mt-1 font-medium" *ngIf="addressInput.invalid && addressInput.touched">Address
+          is required!</span>
+      </div>
+      <div class="flex flex-col">
+        <label for="phoneNumber" class="text-gray-700">Phone Number</label>
+        <input type="tel" id="phoneNumber" name="phoneNumber" [(ngModel)]="signupData.phoneNumber" required
+          #phoneNumberInput="ngModel" pattern="\d{10}" (keydown)="allowOnlyNumbers($event)"  class="w-full p-2 border border-gray-300 rounded" />
+        <span class="text-red-500 text-sm mt-1 font-medium"
+          *ngIf="!phoneNumberInput.value && phoneNumberInput.touched">Phone Number is required!</span>
+        <span class="text-red-500 text-sm mt-1 font-medium"
+          *ngIf="phoneNumberInput.value && phoneNumberInput.invalid && phoneNumberInput.touched">Phone Number is not valid!</span>
+      </div>
+    </div>
+    <div class="flex justify-end mt-4 py-4">
+      <button type="button" (click)="ClosePopup()" class="p-3 mr-2 text-white bg-blue-500 rounded hover:bg-blue-600">
+        Cancel
+      </button>
+      <button type="submit" [disabled]="!signupForm.valid"
+        class="py-2 px-4 text-white bg-blue-500 rounded hover:bg-blue-600 disabled:bg-gray-500 disabled:cursor-not-allowed">
+        Sign Up
+      </button>
+    </div>
+  </form>
+</div>

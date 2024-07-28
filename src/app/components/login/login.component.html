@@ -1,0 +1,53 @@
+<div class="login-container p-1">
+  <div class="mb-8 text-center flex justify-center">
+    <div class="text-3xl">Login</div>
+    <div class="-translate-y-[40%] translate-x-28 font-mono text-xl px-3 py-1 mb-5 shadow-lg rounded-sm cursor-pointer" (click)="ClosePopup()">
+      X
+    </div>
+  </div>
+  <form #loginForm="ngForm" (ngSubmit)="onSubmit(loginForm)" class="signup-form space-y-4 px-2">
+    <div class="form-group flex items-center justify-between ">
+      <label for="email" class=" text-gray-700">Email</label>
+      <div class="flex flex-col">
+        <input
+          type="email"
+          id="email"
+          name="email"
+          [(ngModel)]="loginData.email"
+          required
+          #emailInput="ngModel"
+          pattern="[A-Za-z0-9\._%+\-]+@[A-Za-z0-9\.\-]+\.[A-Za-z]{3,}"
+          class="w-full p-2 border border-gray-300 rounded"
+        />
+        <span class="text-red-500 text-sm mt-1 font-medium" *ngIf="!emailInput.value && emailInput.touched">
+          Email is required!
+        </span>
+        <span class="text-red-500 text-sm mt-1 font-medium" *ngIf="emailInput.value && !emailInput.valid && emailInput.touched">
+          Email is not valid!
+        </span>
+      </div>
+    </div>
+
+    <div class="form-group flex items-center justify-between">
+      <label for="password" class="text-gray-70">Password</label>
+      <div class="flex flex-col">
+        <input
+          type="password"
+          id="password"
+          name="password"
+          [(ngModel)]="loginData.password"
+          required
+          #passwordInput="ngModel"
+          class="w-full p-2 border border-gray-300 rounded"
+        />
+        <span *ngIf="passwordInput.invalid && passwordInput.touched" class="text-red-500 text-sm mt-1 font-medium">
+          Password is required!
+        </span>
+    </div>
+    </div>
+    <div class="flex justify-end">
+      <button type="button" class="p-3 mt-4 mr-2 text-white bg-blue-500 rounded hover:bg-blue-600" (click)="ClosePopup()">Cancel</button>
+      <button type="submit" [disabled]="loginForm.invalid" class="py-2 px-4 mt-4 text-white bg-blue-500 rounded hover:bg-blue-600 disabled:bg-gray-500 disabled:cursor-not-allowed">Login</button>
+    </div>
+  </form>
+</div>

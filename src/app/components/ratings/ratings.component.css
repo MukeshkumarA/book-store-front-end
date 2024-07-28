@@ -1,0 +1,42 @@
+/* ratings.component.css */
+.stars {
+    display: flex;
+  }
+  
+  .star {
+    font-size: 24px;
+    margin-right: 5px;
+    position: relative;
+    display: inline-block;
+  }
+  
+  .full {
+    color: #CD6D17;
+  }
+  
+  .partial {
+    position: relative;
+  }
+  
+  .partial-fill {
+    color: #CD6D17;
+    position: absolute;
+    overflow: hidden;
+  }
+  
+  .partial-empty {
+    color: lightgray;
+  }
+  
+  .empty {
+    color: lightgray;
+  }
+  
+
+  i {
+    font-weight: bolder;
+    font-style: normal;
+    width: 13px;
+    padding: 0 2px;
+    font-size: 18px!important;
+  }

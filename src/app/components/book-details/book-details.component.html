@@ -1,0 +1,50 @@
+
+<div *ngIf="bookDetails; else loading" class="w-full flex justify-center">
+  <div class="w-[60%] bg-white mt-[2%] p-5 rounded shadow-lg">
+    <div class="book-details-container flex justify-center py-[2%]">
+      <div class="book-image-container w-[30%] mr-[5%]">
+        <div class="book-image h-[350px] transform-sm transition-transform transform hover:scale-105">
+          <!-- <img class="object-contain max-w-full max-h-full" src="https://m.media-amazon.com/images/I/61HAE8zahLL._AC_UF1000,1000_QL80_.jpg" [alt]="bookDetails.title" /> -->
+          <!-- <img class="object-contain max-w-full max-h-full" [src]="bookDetails.sanitizedImageData" [alt]="bookDetails.title" /> -->
+          <img class="max-h-[230px] object-contain"
+          src="https://www.99booksstore.com/uploaded_files/product/258492495.jpg" alt="{{ bookDetails.title }}" />
+        </div>
+      </div>
+      <div class="book-info">
+        <p class="text-2xl text-ellipsis font-medium">{{bookDetails.title}}</p>
+        <p class="mt-[-10px]" >Author: <span class="text-[#43A047] mx-1">{{bookDetails.author}}</span></p>
+        <p>ISBN: <span>{{bookDetails.isbn}}</span></p>
+        <p>Genre: <span>{{bookDetails.genre}}</span></p>
+        <!-- <p>Published on: <span>{{bookDetails.publicationDate}}</span></p> -->
+        <p ><span class="price font-medium text-2xl">{{bookDetails.price | currency}} </span><span class="price line-through ml-3 text-xl">{{bookDetails.price + 30 | currency}}</span></p>
+
+        <div class="flex items-center mt-10">
+          <div class="w-[120px] h-[50px] flex items-center border border-gray-300 rounded-md bg-white shadow-sm">
+            <button class="text-xl w-1/3 text-center rounded-l-md text-gray-700 cursor-pointer border-r border-gray-300 hover:bg-gray-100" (click)="decrementQuantity()">-</button>
+            <div class="w-1/3 text-center text-gray-700">{{quantity}}</div>
+            <button class="text-xl w-1/3 text-center rounded-r-md text-gray-700 cursor-pointer border-l border-gray-300 hover:bg-gray-100" (click)="addQuantity()">+</button>
+          </div>
+          <div class="ml-5 ">
+            <button class="h-[50px] px-4 py-2 rounded-md bg-blue-500 text-white hover:bg-blue-600 shadow-md" (click)="addBookToCart(bookDetails)" >Add to cart</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- <ng-template #loading>
+  <p>Loading book details...</p>
+</ng-template> -->
+
+<!-- 
+<ng-container>
+  <div *ngIf="bookDetails" class="mt-8">
+    <app-best-sellers  [currentBook]="bookDetails"></app-best-sellers>
+  </div>
+</ng-container> -->
+
+
+
+<!-- flex border-2 border-red-500 rounded-md bg-gray-500 -->

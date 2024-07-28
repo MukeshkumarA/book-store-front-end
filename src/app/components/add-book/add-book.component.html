@@ -1,0 +1,126 @@
+<ng-container>
+    <div class="flex justify-center items-center">
+      <div class="add-book-container w-full max-w-3xl bg-white px-20 py-6 m-10 shadow-lg rounded-md">
+        <div class="mb-8 text-center flex justify-center relative">
+          <div class="text-3xl font-semibold text-gray-800">Add Book</div>
+        </div>
+        <form #addBookForm="ngForm" (ngSubmit)="onSubmit(addBookForm)" class="space-y-4">
+          <div class="grid grid-cols-1 gap-4">
+            <div class="flex flex-col">
+              <label for="title" class="text-gray-700 my-2">Title</label>
+              <input type="text" id="title" name="title" [(ngModel)]="bookData.title" required
+                     #titleInput="ngModel" class="w-full p-2 border border-gray-300 rounded" />
+              <span class="text-red-500 text-sm mt-1 font-medium"
+                    *ngIf="titleInput.invalid && titleInput.touched">Title is required!</span>
+            </div>
+            <div class="flex flex-col">
+              <label for="author" class="text-gray-700 my-2">Author</label>
+              <input type="text" id="author" name="author" [(ngModel)]="bookData.author" required
+                     #authorInput="ngModel" class="w-full p-2 border border-gray-300 rounded" />
+              <span class="text-red-500 text-sm mt-1 font-medium"
+                    *ngIf="authorInput.invalid && authorInput.touched">Author is required!</span>
+            </div>
+            <div class="flex flex-col">
+              <label for="publisher" class="text-gray-700 my-2">Publisher</label>
+              <input type="text" id="publisher" name="publisher" [(ngModel)]="bookData.publisher"
+                     #publisherInput="ngModel" class="w-full p-2 border border-gray-300 rounded" />
+              <!-- <span class="text-red-500 text-sm mt-1 font-medium"
+                    *ngIf="publisherInput.invalid && publisherInput.touched">Publisher is required!</span> -->
+            </div>
+            <div class="flex flex-col">
+              <label for="publicationDate" class="text-gray-700 my-2">Publication Date</label>
+              <input type="date" id="publicationDate" name="publicationDate" [(ngModel)]="bookData.publicationDate" required
+                     #publicationDateInput="ngModel" class="w-full p-2 border border-gray-300 rounded" />
+              <span class="text-red-500 text-sm mt-1 font-medium"
+                    *ngIf="publicationDateInput.invalid && publicationDateInput.touched">Publication Date is required!</span>
+            </div>
+            <div class="flex flex-col">
+              <label for="isbn" class="text-gray-700 my-2">ISBN</label>
+              <input type="text" id="isbn" name="isbn" [(ngModel)]="bookData.isbn" required
+                     #isbnInput="ngModel" class="w-full p-2 border border-gray-300 rounded" />
+              <span class="text-red-500 text-sm mt-1 font-medium"
+                    *ngIf="isbnInput.invalid && isbnInput.touched">ISBN is required!</span>
+            </div>
+            <div class="flex flex-col">
+              <label for="genre" class="text-gray-700 my-2">Genre</label>
+              <input type="text" id="genre" name="genre" [(ngModel)]="bookData.genre" required
+                     #genreInput="ngModel" class="w-full p-2 border border-gray-300 rounded" />
+              <span class="text-red-500 text-sm mt-1 font-medium"
+                    *ngIf="genreInput.invalid && genreInput.touched">Genre is required!</span>
+            </div>
+            <div class="flex flex-col">
+              <label for="price" class="text-gray-700 my-2">Price</label>
+              <input type="number" id="price" name="price" [(ngModel)]="bookData.price" required
+                     #priceInput="ngModel" class="w-full p-2 border border-gray-300 rounded" />
+              <span class="text-red-500 text-sm mt-1 font-medium"
+                    *ngIf="priceInput.invalid && priceInput.touched">Price is required!</span>
+            </div>
+            <div class="flex flex-col">
+              <label for="description" class="text-gray-700 my-2">Description</label>
+              <textarea id="description" name="description" [(ngModel)]="bookData.description" required
+                        #descriptionInput="ngModel" class="w-full p-2 border border-gray-300 rounded"></textarea>
+              <span class="text-red-500 text-sm mt-1 font-medium"
+                    *ngIf="descriptionInput.invalid && descriptionInput.touched">Description is required!</span>
+            </div>
+            <div class="flex flex-col">
+              <label for="pageCount" class="text-gray-700 my-2">Page Count</label>
+              <input type="number" id="pageCount" name="pageCount" [(ngModel)]="bookData.pageCount" required
+                     #pageCountInput="ngModel" class="w-full p-2 border border-gray-300 rounded" />
+              <span class="text-red-500 text-sm mt-1 font-medium"
+                    *ngIf="pageCountInput.invalid && pageCountInput.touched">Page Count is required!</span>
+            </div>
+            <div class="flex flex-col">
+              <label for="language" class="text-gray-700 my-2">Language</label>
+              <input type="text" id="language" name="language" [(ngModel)]="bookData.language" required
+                     #languageInput="ngModel" class="w-full p-2 border border-gray-300 rounded" />
+              <span class="text-red-500 text-sm mt-1 font-medium"
+                    *ngIf="languageInput.invalid && languageInput.touched">Language is required!</span>
+            </div>
+            <div class="flex flex-col">
+              <label for="stockQuantity" class="text-gray-700 my-2">Stock Quantity</label>
+              <input type="number" id="stockQuantity" name="stockQuantity" [(ngModel)]="bookData.stockQuantity" required
+                     #stockQuantityInput="ngModel" class="w-full p-2 border border-gray-300 rounded" />
+              <span class="text-red-500 text-sm mt-1 font-medium"
+                    *ngIf="stockQuantityInput.invalid && stockQuantityInput.touched">Stock Quantity is required!</span>
+            </div>
+            <div class="flex flex-col">
+              <label for="format" class="text-gray-700 my-2">Format</label>
+              <input type="text" id="format" name="format" [(ngModel)]="bookData.format"
+                     #formatInput="ngModel" class="w-full p-2 border border-gray-300 rounded" />
+            </div>
+            <div class="flex flex-col">
+              <label for="dimensions" class="text-gray-700 my-2">Dimensions</label>
+              <input type="text" id="dimensions" name="dimensions" [(ngModel)]="bookData.dimensions"
+                     #dimensionsInput="ngModel" class="w-full p-2 border border-gray-300 rounded" />
+            </div>
+
+            <div class="flex flex-col">
+                <label for="coverImageUrl" class="text-gray-700 my-2">Cover Image URL</label>
+                <input type="file" id="coverImageUrl" name="coverImageUrl" [(ngModel)]="bookData.imageData" (change)="onImageSelected($event)"
+                       #coverImageInput="ngModel" class="w-full p-2 border border-gray-300 rounded" />
+                <!-- <span class="text-red-500 text-sm mt-1 font-medium"
+                      *ngIf="coverImageUrlInput.invalid && coverImageUrlInput.touched">Cover Image URL is required!</span> -->
+              </div>
+
+              <div *ngIf="imagePreview">
+                <p class="text-gray-700 my-2">Image Preview:</p>
+                <img [src]="imagePreview" alt="Image Preview" class="w-32 h-32 object-cover rounded-md" />
+              </div>
+
+
+          </div>
+          <div class="flex justify-end mt-6">
+            <button type="button"
+                    class="p-3 mr-2 text-white bg-gray-500 rounded hover:bg-gray-600">
+              Cancel
+            </button>
+            <button type="submit" [disabled]="addBookForm.invalid"
+                    class="p-3 text-white bg-blue-500 rounded hover:bg-blue-600">
+              Add Book
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </ng-container>
+  

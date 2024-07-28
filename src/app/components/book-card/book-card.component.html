@@ -1,0 +1,35 @@
+<div *ngIf="book">
+    <div (click)="navigateToBookDetails(book.id)">
+        <div class="">
+            <!-- <img class="max-w-full object-contain" [src]="book.sanitizedImageData" alt="{{ book.title }} cover image" /> -->
+            <img class="max-h-[230px] object-contain"
+                src="https://www.99booksstore.com/uploaded_files/product/258492495.jpg" alt="{{ book.title }}" />
+        </div>
+        <div class="mt-5">
+            <div class="text-ellipsis overflow-hidden text-[17px]">{{ book.title }}</div>
+            <div class="text-[#AE001D] font-thin capitalize tracking-widesttext-ellipsis overflow-hidden text-[18px]">
+                <span class="lowercase text-[17px]">by </span>{{ book.author }}</div>
+            <app-ratings [rating]="(book.rating)? book.rating : 0"></app-ratings>
+            <div class="text-[16px] text-[#77B748]"> <span class="font-semibold">₹</span> {{ book.price }}</div>
+        </div>
+    </div>
+    <!-- <div class="cart mt-2 bg-white border border-[#DBDBDB] text-[#CD6D17] hover:cursor-pointer flex justify-around items-center p-2 rounded-full hover:bg-[#77b748] hover:text-white">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="24" viewBox="0 0 24 24" fill="none"
+            class="cart-icon">
+            <path
+                d="M20 10L18.5145 17.4276C18.3312 18.3439 18.2396 18.8021 18.0004 19.1448C17.7894 19.447 17.499 19.685 17.1613 19.8326C16.7783 20 16.3111 20 15.3766 20H8.62337C7.6889 20 7.22166 20 6.83869 19.8326C6.50097 19.685 6.2106 19.447 5.99964 19.1448C5.76041 18.8021 5.66878 18.3439 5.48551 17.4276L4 10M20 10H18M20 10H21M4 10H3M4 10H6M6 10H18M6 10L9 4M18 10L15 4M9 13V16M12 13V16M15 13V16"
+                stroke="#000000" stroke-linejoin="round" stroke-width="0.5" stroke-linecap="round" />
+        </svg>
+        <div class="text-[17px]" (click)="addBookToCart(book)">Add to cart</div>
+    </div> -->
+    <div class="mt-2 flex">
+        <div class="cart w-full bg-white border border-[#DBDBDB] text-[#CD6D17] hover:cursor-pointer flex justify-around items-center p-2 rounded-full hover:bg-[#77b748] hover:text-white" (click)="addBookToCart(book)">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="24" viewBox="0 0 24 24" fill="none" class="cart-icon">
+                <path
+                    d="M20 10L18.5145 17.4276C18.3312 18.3439 18.2396 18.8021 18.0004 19.1448C17.7894 19.447 17.499 19.685 17.1613 19.8326C16.7783 20 16.3111 20 15.3766 20H8.62337C7.6889 20 7.22166 20 6.83869 19.8326C6.50097 19.685 6.2106 19.447 5.99964 19.1448C5.76041 18.8021 5.66878 18.3439 5.48551 17.4276L4 10M20 10H18M20 10H21M4 10H3M4 10H6M6 10H18M6 10L9 4M18 10L15 4M9 13V16M12 13V16M15 13V16"
+                    stroke="#000000" stroke-linejoin="round" stroke-width="0.5" stroke-linecap="round" />
+            </svg>
+            <div class="text-[17px]">Add to cart</div>
+        </div>
+    </div>
+</div>

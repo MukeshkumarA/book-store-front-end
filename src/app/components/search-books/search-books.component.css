@@ -1,0 +1,15 @@
+
+.search-btns button {
+    color: white;
+    background-color: black;
+    padding: 0.7rem 1rem;
+    border-radius: 5px;
+    transition: all 2ms;
+}
+
+.search-btns button:hover {
+    color: #e5e7eb;
+    background-color: #808080;
+
+}
+

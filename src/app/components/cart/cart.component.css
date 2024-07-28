@@ -1,0 +1,9 @@
+
+.delete-cart:hover {
+    fill: red;
+    cursor: pointer;
+}
+.remove-all-icon:hover {
+    fill: red;
+    cursor: pointer;
+}

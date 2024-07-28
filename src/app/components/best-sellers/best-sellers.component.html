@@ -1,0 +1,127 @@
+<!-- <ng-container>
+  <div class="container mx-auto mt-10">
+    <div class="text-3xl text-center font-medium mb-8">
+      Best Sellers
+    </div>
+    <div class="flex flex-wrap justify-center gap-10 mx-[5%]">
+      <div *ngFor="let book of books" class="max-w-xs p-4">
+        <div class="w-[130px] h-[200px] mx-auto mb-4">
+          <img
+            src="https://m.media-amazon.com/images/I/61HAE8zahLL._AC_UF1000,1000_QL80_.jpg"
+            alt="{{book.title}}"
+            class="w-full h-full object-contain"
+          />
+        </div>
+        <div class="text-center">
+          <div class="text-xl font-medium bg-white m-5 p-1 rounded-lg shadow-lg">$ {{ book.price }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container> -->
+
+
+<!-- <div class="container w-[80%] mx-auto mt-5 overflow-hidden">
+  <div class="text-3xl text-center font-medium mb-8">Best Sellers</div>
+  <div class="slider-container px-[5%] ">
+    <div class="slider" #slider>
+      <div  *ngFor="let book of books" class="card min-w-[180px] max-w-[200px] bg-white shadow-lg rounded-lg overflow-hidden m-5">
+        <div class="card-image w-full h-[180px] mt-5">
+          <img class="object-contain w-full h-full" 
+               src="https://m.media-amazon.com/images/I/61HAE8zahLL._AC_UF1000,1000_QL80_.jpg" 
+               alt="{{ book.title }}" />
+        </div>
+        <div class="card-content text-center py-4 px-4">
+          <div class="card-price text-white text-base font-thin bg-blue-400 rounded-md py-1 px-3 inline-block">
+            $ {{ book.price }}
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="slider-nav absolute inset-0 flex items-center justify-between px-4">
+      <button (click)="scrollLeft()" class="p-3 bg-white text-black rounded-md shadow-md">&lt;</button>
+      <button (click)="scrollRight()" class="p-3 bg-white text-black rounded-md shadow-md">&gt;</button>
+    </div>
+  </div>
+</div> -->
+
+<!-- <ng-container>
+<div class="container w-[80%]  mx-auto overflow-hidden">
+  <div class="text-3xl text-center font-medium">Best Sellers</div>
+  <div class="slider-container px-[5%]">
+    <div class="slider" #slider>
+      <div *ngFor="let book of books" class="card min-w-[180px] max-w-[200px] bg-white shadow-lg rounded-lg overflow-hidden m-5">
+        <div (click)="goToBookDetails(book.id)">
+        <div class="card-image w-full h-[180px] mt-5">
+          <img class="object-contain w-full h-full" 
+               src="https://m.media-amazon.com/images/I/61HAE8zahLL._AC_UF1000,1000_QL80_.jpg" 
+               alt="{{ book.title }}" />
+          <!-- <img class="object-contain w-full h-full" 
+               [src]="book.sanitizedImageData"
+               alt="{{ book.title }}" /> 
+        </div>
+        <div class="card-content text-center py-4 px-4">
+          <div class="card-price text-white text-base font-thin bg-blue-400 rounded-md py-1 px-3 inline-block">
+            $ {{ book.price }}
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+    <div class="slider-nav absolute top-[40%] left-0 right-0 flex items-center justify-between px-4">
+      <button (click)="scrollLeft()" [disabled]="isPrevDisabled" class="p-3 bg-white disabled:bg-gray-500 text-black rounded-md shadow-md">&lt;</button>
+      <button (click)="scrollRight()" [disabled]="isNextDisabled" class="p-3 bg-white disabled:bg-gray-500 text-black rounded-md shadow-md">&gt;</button>
+    </div>
+  </div>
+</div>
+</ng-container> -->
+
+
+
+<ng-container>
+  <div class="container w-[80%]  mx-auto overflow-hidden">
+    <div class="text-3xl text-center font-medium">Best Sellers</div>
+
+
+    <div class="slider-container px-[5%]">
+      <div class="slider" #slider>
+
+        <!-- <div *ngFor="let book of books" class="card min-w-[180px] max-w-[200px] bg-white shadow-lg rounded-lg overflow-hidden m-5"> -->
+          
+          <div class="flex flex-wrap justify-center">
+            <div *ngFor="let book of books" (click)="goToBookDetails(book.id)" class="book-card cursor-pointer m-4 max-w-xs shadow-lg rounded-lg overflow-hidden bg-white transition-transform transform hover:scale-105">
+              <div class="card-image w-full h-[180px] bg-gray-200 flex items-center justify-center">
+                <img class="object-contain w-full h-full" src="https://m.media-amazon.com/images/I/61HAE8zahLL._AC_UF1000,1000_QL80_.jpg" alt="{{ book.title }}" />
+                <!-- Uncomment the next line and remove the above img tag to use dynamic images -->
+                <!-- <img class="object-contain w-full h-full" [src]="book.sanitizedImageData" alt="{{ book.title }}" /> -->
+              </div>
+              <div class="card-content text-center py-4 px-4">
+                <h3 class="card-title text-lg font-semibold mb-2">{{ book.title }}</h3>
+                <p class="card-author text-gray-600 text-sm mb-2">by {{ book.author }}</p>
+                <div class="card-price text-white text-base font-thin bg-blue-500 rounded-md py-1 px-3 inline-block">
+                  ₹ {{ book.price }}
+                </div>
+              </div>
+            </div>
+          </div>
+          
+
+
+      <!-- </div> -->
+
+
+      </div>
+
+
+    </div>
+  </div>
+  </ng-container>
+  
+
+        <!-- <div class="slider-nav absolute top-[40%] left-0 right-0 flex items-center justify-between px-4">
+        <button (click)="scrollLeft()" [disabled]="isPrevDisabled" class="p-3 bg-white disabled:bg-gray-500 text-black rounded-md shadow-md">&lt;</button>
+        <button (click)="scrollRight()" [disabled]="isNextDisabled" class="p-3 bg-white disabled:bg-gray-500 text-black rounded-md shadow-md">&gt;</button>
+      </div> -->
+
+
+

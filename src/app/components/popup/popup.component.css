@@ -1,0 +1,4 @@
+.mdc-dialog--open .mat-mdc-dialog-surface, .mdc-dialog--closing .mat-mdc-dialog-surface {
+    transform: none;
+    border-radius: 5px;
+}
