@@ -4,12 +4,14 @@ import { Book } from '../book-list/book';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { BookCardComponent } from "../book-card/book-card.component";
+import { CartItem, CartService } from '../../services/cart.service';
 
 
 @Component({
   selector: 'app-best-sellers',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, BookCardComponent],
   templateUrl: './best-sellers.component.html',
   styleUrl: './best-sellers.component.css'
 })
@@ -23,14 +25,20 @@ export class BestSellersComponent {
   isNextDisabled: boolean = false;
   private routeSub: Subscription = new Subscription();
 
-  @ViewChild('slider', { static: true }) slider!: ElementRef;
+  @ViewChild('bookContainer', { static: true }) bookContainer!: ElementRef;
 
   constructor(
     private bookService: BookService,
     private router: Router,
     private route: ActivatedRoute,
-    private cdr: ChangeDetectorRef
-  ) {}
+    private cdr: ChangeDetectorRef,
+    private cartService: CartService
+  ) {
+    this.router.routeReuseStrategy.shouldReuseRoute = function () {
+      return false;
+    }
+  }
+
 
   ngOnInit() {
     this.getPopularBooks();
@@ -68,28 +76,37 @@ export class BestSellersComponent {
   }
 
   scrollLeft() {
-    this.slider.nativeElement.scrollBy({ left: -500, behavior: 'smooth' });
-    this.updateButtonStates();
+    this.bookContainer.nativeElement.scrollBy({ left: -500, behavior: 'smooth' });
   }
 
   scrollRight() {
-    this.slider.nativeElement.scrollBy({ left: 500, behavior: 'smooth' });
-    this.updateButtonStates();
+    this.bookContainer.nativeElement.scrollBy({ left: 500, behavior: 'smooth' });
   }
 
-  updateButtonStates() {
-    const sliderElement = this.slider.nativeElement;
-    const scrollLeft = sliderElement.scrollLeft;
-    const scrollWidth = sliderElement.scrollWidth;
-    const clientWidth = sliderElement.clientWidth;
-    this.isPrevDisabled = scrollLeft === 0;
-    this.isNextDisabled = scrollLeft + clientWidth >= (scrollWidth - 100);
-  }
+  // updateButtonStates() {
+  //   const sliderElement = this.slider.nativeElement;
+  //   const scrollLeft = sliderElement.scrollLeft;
+  //   const scrollWidth = sliderElement.scrollWidth;
+  //   const clientWidth = sliderElement.clientWidth;
+  //   this.isPrevDisabled = scrollLeft === 0;
+  //   this.isNextDisabled = scrollLeft + clientWidth >= (scrollWidth - 100);
+  // }
 
   goToBookDetails(bookId: number | undefined) {
     console.log('Book ID:', bookId);
     if(bookId)
       this.router.navigate(['/book', bookId]);
+  }
+
+  addBookToCart(book: Book){
+    const cartItem: CartItem = {
+      bookId: book.id as number,
+      quantity: 1,
+      price: book.price,
+      totalPrice: book.price,
+      title: book.title
+    }
+    this.cartService.addToCart(cartItem);
   }
   
  

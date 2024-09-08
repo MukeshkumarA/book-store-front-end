@@ -1,22 +1,43 @@
 <nav>
-    <div class="flex justify-between place-items-center h-20 bg-[#F4F1EE] px-16 w-full shadow-lg">
-        <div class="text-[1.2rem] font-bold  uppercase hover:text-red-600 cursor-pointer">
-            <div (click)="goToHome()">The Book Buffet</div>
-        </div>
-
-        <div>
-            <ul class="nav-list flex text-[18px]">
-                <li class="" (click)="goToHome()">Home</li>
-                <li class="" (click)="goToCategories()">Categories</li>
-                <li class="" (click)="openLoginDialog()">Login </li>
-                <li class="" (click)="openSignUpDialog()">Sign up</li>
-                <li class="" (click)="navigateToProfile()">Profile</li>
-                <li class="" (click)="navigateToCartPage()">Cart </li>
-                <li class="">Hamburgur</li>
-                <li class="" (click)="goToAddBookComponent()">AddBook</li>
-                <li class="" (click)="logout()">Logout</li>
-            </ul>
-        </div>
-
+    <div class="flex justify-between items-center h-20 bg-white px-16 w-full shadow-xl">
+      <div class="text-[1.2rem] font-bold uppercase hover:text-red-600 cursor-pointer">
+        <a routerLink="/" class="no-underline text-inherit">The Book Garage</a>
+      </div>
+  
+      <div>
+        <ul class="nav-list flex items-center text-[18px] space-x-4">
+          <li><a routerLink="/" routerLinkActive="active" class="no-underline text-inherit">Home</a></li>
+          <li><a routerLink="/categories" routerLinkActive="active" class="no-underline text-inherit">Categories</a></li>
+  
+          <!-- Cart -->
+          <li><a (click)="navigateToCartPage()" routerLinkActive="active" class="no-underline text-inherit cursor-pointer">Cart</a></li>
+  
+          <!-- Login/Sign Up when user is not logged in -->
+          <li *ngIf="!(isLoggedIn$ | async)" routerLinkActive="active">
+            <a (click)="openLoginDialog()" class="no-underline text-inherit cursor-pointer">Login</a>
+          </li>
+          <li *ngIf="!(isLoggedIn$ | async)" routerLinkActive="active">
+            <a (click)="openSignUpDialog()" class="no-underline text-inherit cursor-pointer">Sign Up</a>
+          </li>
+  
+          <!-- Admin Add Book option -->
+          <li *ngIf="(isLoggedIn$ | async) && (isAdminLoggedIn() | async)" routerLinkActive="active">
+            <a routerLink="/admin/addbook" class="no-underline text-inherit">Add Book</a>
+          </li>
+  
+          <!-- Logout when user is logged in -->
+          <li *ngIf="isLoggedIn$ | async" routerLinkActive="active">
+            <a (click)="logout()" class="no-underline text-inherit cursor-pointer">Logout</a>
+          </li>
+  
+          <!-- Show user profile initial when logged in -->
+          <li *ngIf="isLoggedIn$ | async" routerLinkActive="active">
+            <div class="bg-[#77B748] text-white w-10 h-10 justify-center items-center flex rounded-full" (click)="navigateToProfile()">
+              {{ loggedUserName?.charAt(0)?.toUpperCase() }}
+            </div>
+          </li>
+        </ul>
+      </div>
     </div>
-</nav>
+  </nav>
+  

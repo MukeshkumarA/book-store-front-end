@@ -10,10 +10,11 @@
     </div>
 
     <div *ngFor="let item of cart.cartItems" class="mb-10 ">
-      <div class="bg-white flex justify-between px-8 h-24 items-center rounded-md sha">
+      <div class="bg-[#F8F8F8] flex justify-between px-8 h-24 items-center rounded-md shadow-lg">
           <div class="w-[30%] h-full flex items-center">
             <div class="w-[full]">
-              <img class="h-[70px]" [src]="item.book?.imageData" alt="{{ item.title }}">
+              <!-- <img class="h-[70px]" [src]="item.book?.imageData" alt="{{ item.title }}"> -->
+              <img class="h-[70px]" src="https://cdn.shopify.com/s/files/1/0648/3066/9017/products/9780241551820.jpg.f916736674.999xx_360x.jpg?v=1680623337" alt="{{ item.title }}">
             </div>
             <div class=" ml-5 overflow-ellipsis">
               {{ item.title }}

@@ -1,27 +1,7 @@
-.container {
-    position: relative;
-  }
-  
-  .slider-container {
-    width: 100%;
-    overflow: hidden;
-    margin: 20px 10px;
-    position: relative; /* Make sure this is positioned relative */
-  }
-  
-  .slider {
-    display: flex;
-    overflow-x: auto; /* Ensure horizontal overflow is enabled */
-    scroll-behavior: smooth; /* Smooth scrolling */
-    -webkit-overflow-scrolling: touch; /* Enable momentum scrolling for touch devices */
-  }
-  
-  .slider::-webkit-scrollbar {
-    display: none; /* Hide scrollbar in WebKit-based browsers */
+.svg-outer:hover {
+  .svg-icon {
+      fill: #fff!important;
+      stroke: #fff;
   }
 
-  .slider-nav button:disabled {
-    background-color: #f0f0f0; /* Light gray background */
-    color: #aaa; /* Lighter text color */
-    opacity: 0.6; /* Reduced opacity */
 }

@@ -7,7 +7,7 @@
 </ng-container>
 
 <ng-container>
-    <div *ngIf="books.length > 0; else nobooks" class="flex flex-wrap justify-center px-[15%] py-[2%]">
+    <div *ngIf="books.length > 0; else nobooks" class="flex flex-wrap justify-center px-[10%] py-[2%]">
         <div *ngFor="let book of paginatedBooks; let i = index" class="book-container text-xl p-4 m-2 ">
             <!-- <div class="flex flex-col items-cente bg-white border-none rounded shadow-md m-4">
                 <div class="w-[270px] h-[200px] flex items-center justify-center" (click)="navigateToBookDetails(book.id)">
@@ -48,7 +48,7 @@
                 <!-- <div (click)="navigateToBookDetails(book.id)">
                     <div>
                         <!-- <img class="max-w-full object-contain" [src]="book.sanitizedImageData" alt="{{ book.title }} cover image" />
-                        <img class="max-h-[230px] object-contain" src="https://www.99booksstore.com/uploaded_files/product/258492495.jpg" alt="{{ book.title }} cover image" />
+                        <img class="max-h-[230px] object-contain" src="https://cdn.shopify.com/s/files/1/0648/3066/9017/products/9780241551820.jpg.f916736674.999xx_360x.jpg?v=1680623337" alt="{{ book.title }} cover image" />
                     </div>
                     <div class="mt-5">
                         <div class="text-ellipsis overflow-hidden text-[17px]">{{ book.title }}</div>

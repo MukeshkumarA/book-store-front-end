@@ -1,9 +1,10 @@
 <div *ngIf="book">
     <div (click)="navigateToBookDetails(book.id)">
         <div class="">
-            <!-- <img class="max-w-full object-contain" [src]="book.sanitizedImageData" alt="{{ book.title }} cover image" /> -->
+            <!-- <img class="max-h-[230px] object-contain" [src]="book.sanitizedImageData" alt="{{ book.title }}" /> -->
             <img class="max-h-[230px] object-contain"
-                src="https://www.99booksstore.com/uploaded_files/product/258492495.jpg" alt="{{ book.title }}" />
+                src="https://cdn.shopify.com/s/files/1/0648/3066/9017/files/719uAS32P7L_360x.jpg?v=1685956273" alt="{{ book.title }}" />
+
         </div>
         <div class="mt-5">
             <div class="text-ellipsis overflow-hidden text-[17px]">{{ book.title }}</div>

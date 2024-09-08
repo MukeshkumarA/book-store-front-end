@@ -12,6 +12,7 @@ import { PopupService } from '../../services/popup.service';
 import { LoginComponent } from '../login/login.component';
 import { MatDialog } from '@angular/material/dialog';
 import { PopupComponent } from '../popup/popup.component';
+import { stat } from 'node:fs';
 
 @Component({
   selector: 'app-cart',
@@ -23,6 +24,7 @@ import { PopupComponent } from '../popup/popup.component';
 export class CartComponent {
 
   cart: Cart = { cartItems: [], totalPrice: 0 };
+  private isLoggedIn: boolean = false;
 
   constructor(
     private cartService: CartService,
@@ -43,6 +45,10 @@ export class CartComponent {
         this.loadSessionCart();
       }
     });
+
+    this.authService.isLoggedIn$.subscribe(status => {
+      this.isLoggedIn = status;
+    })
   }
 
   private loadSessionCart(): void {
@@ -75,7 +81,7 @@ export class CartComponent {
   }
 
   syncSessionCartWithServer(): void {
-    if (this.authService.isLoggedIn()) {
+    if (this.isLoggedIn) {
       const sessionCart = this.cartService.getSessionCart();
       sessionCart.forEach(item => {
         this.cartService.addToCart(item).subscribe(() => {
@@ -101,7 +107,7 @@ export class CartComponent {
 
   removeCartItem(cartItem: CartItem) {
     this.cart.cartItems = this.cart.cartItems.filter(c => c.bookId != cartItem.bookId);
-    if (!this.authService.isLoggedIn()) {
+    if (!this.isLoggedIn) {
       this.cartService.removeFromSessionCart(cartItem);
     }
     else {
@@ -114,7 +120,7 @@ export class CartComponent {
   }
 
   clearCart() {
-    if(!this.authService.isLoggedIn){
+    if(!this.isLoggedIn){
       this.cartService.clearSessionCart();
       alert("Your cart is cleared!");
     }

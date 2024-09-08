@@ -4,6 +4,7 @@ import { FormsModule, NgForm } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { AuthService } from '../../services/auth.service';
 import { Observable } from 'rxjs';
+import { Route, Router } from '@angular/router';
 
 
 export interface LoginData {
@@ -25,13 +26,14 @@ export interface LoginData {
 export class LoginComponent {
 
   
-
   loginData: LoginData = {
     email: '',
     password: '',
   };
 
-  constructor(private dialogRef: MatDialogRef<LoginComponent>, private authService: AuthService) { }
+  constructor(private dialogRef: MatDialogRef<LoginComponent>, private authService: AuthService,
+    private router: Router
+  ) { }
 
   // onSubmit(form: NgForm) {
     // console.log(form.value);
@@ -51,10 +53,10 @@ export class LoginComponent {
       this.authService.login(form.value.email, form.value.password).subscribe(response => {
         console.log('Login successful:', response);
         alert("login success");
-        // Handle successful login (e.g., redirect to another page)
+        this.dialogRef.close();
+        // this.router.navigate(['/']);
       }, error => {
         console.error('Login error:', error);
-        // Handle error response (e.g., show error message)
       });
     } else {
       console.log('Form is invalid');

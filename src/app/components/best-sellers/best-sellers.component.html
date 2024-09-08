@@ -1,121 +1,43 @@
-<!-- <ng-container>
-  <div class="container mx-auto mt-10">
-    <div class="text-3xl text-center font-medium mb-8">
-      Best Sellers
-    </div>
-    <div class="flex flex-wrap justify-center gap-10 mx-[5%]">
-      <div *ngFor="let book of books" class="max-w-xs p-4">
-        <div class="w-[130px] h-[200px] mx-auto mb-4">
-          <img
-            src="https://m.media-amazon.com/images/I/61HAE8zahLL._AC_UF1000,1000_QL80_.jpg"
-            alt="{{book.title}}"
-            class="w-full h-full object-contain"
-          />
-        </div>
-        <div class="text-center">
-          <div class="text-xl font-medium bg-white m-5 p-1 rounded-lg shadow-lg">$ {{ book.price }}</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</ng-container> -->
-
-
-<!-- <div class="container w-[80%] mx-auto mt-5 overflow-hidden">
-  <div class="text-3xl text-center font-medium mb-8">Best Sellers</div>
-  <div class="slider-container px-[5%] ">
-    <div class="slider" #slider>
-      <div  *ngFor="let book of books" class="card min-w-[180px] max-w-[200px] bg-white shadow-lg rounded-lg overflow-hidden m-5">
-        <div class="card-image w-full h-[180px] mt-5">
-          <img class="object-contain w-full h-full" 
-               src="https://m.media-amazon.com/images/I/61HAE8zahLL._AC_UF1000,1000_QL80_.jpg" 
-               alt="{{ book.title }}" />
-        </div>
-        <div class="card-content text-center py-4 px-4">
-          <div class="card-price text-white text-base font-thin bg-blue-400 rounded-md py-1 px-3 inline-block">
-            $ {{ book.price }}
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="slider-nav absolute inset-0 flex items-center justify-between px-4">
-      <button (click)="scrollLeft()" class="p-3 bg-white text-black rounded-md shadow-md">&lt;</button>
-      <button (click)="scrollRight()" class="p-3 bg-white text-black rounded-md shadow-md">&gt;</button>
-    </div>
-  </div>
-</div> -->
-
-<!-- <ng-container>
-<div class="container w-[80%]  mx-auto overflow-hidden">
-  <div class="text-3xl text-center font-medium">Best Sellers</div>
-  <div class="slider-container px-[5%]">
-    <div class="slider" #slider>
-      <div *ngFor="let book of books" class="card min-w-[180px] max-w-[200px] bg-white shadow-lg rounded-lg overflow-hidden m-5">
-        <div (click)="goToBookDetails(book.id)">
-        <div class="card-image w-full h-[180px] mt-5">
-          <img class="object-contain w-full h-full" 
-               src="https://m.media-amazon.com/images/I/61HAE8zahLL._AC_UF1000,1000_QL80_.jpg" 
-               alt="{{ book.title }}" />
-          <!-- <img class="object-contain w-full h-full" 
-               [src]="book.sanitizedImageData"
-               alt="{{ book.title }}" /> 
-        </div>
-        <div class="card-content text-center py-4 px-4">
-          <div class="card-price text-white text-base font-thin bg-blue-400 rounded-md py-1 px-3 inline-block">
-            $ {{ book.price }}
-          </div>
-        </div>
-      </div>
-    </div>
-    </div>
-    <div class="slider-nav absolute top-[40%] left-0 right-0 flex items-center justify-between px-4">
-      <button (click)="scrollLeft()" [disabled]="isPrevDisabled" class="p-3 bg-white disabled:bg-gray-500 text-black rounded-md shadow-md">&lt;</button>
-      <button (click)="scrollRight()" [disabled]="isNextDisabled" class="p-3 bg-white disabled:bg-gray-500 text-black rounded-md shadow-md">&gt;</button>
-    </div>
-  </div>
-</div>
-</ng-container> -->
-
-
 
 <ng-container>
-  <div class="container w-[80%]  mx-auto overflow-hidden">
-    <div class="text-3xl text-center font-medium">Best Sellers</div>
+  <div class="mx-[15%] pb-[5%]">
+        <div class="mt-14 mb-3 flex justify-between">
+          <div class="text-2xl font-thin capitalize">You May Also Like</div>
+          <div class="px-10 flex">
+            <div class="svg-outer cursor-pointer w-[40px] h-[40px] flex justify-center items-center hover:bg-[#CD6D17] hover:border-none border rounded-full border-[#DCDCDC]" (click)="scrollLeft()">
+              <svg xmlns="http://www.w3.org/2000/svg" class="svg-icon" width="20" height="20" fill="#333333"
+                viewBox="0 0 1024 1024" version="1.1">
+                <path
+                  d="M640 832a21.333333 21.333333 0 0 1-15.146667-6.186667l-298.666666-298.666666a21.333333 21.333333 0 0 1 30.293333-30.293334l298.666667 298.666667a21.333333 21.333333 0 0 1 0 30.293333A21.333333 21.333333 0 0 1 640 832z" />
+                <path
+                  d="M341.333333 533.333333a21.333333 21.333333 0 0 1-15.146666-6.186666 21.333333 21.333333 0 0 1 0-30.293334l298.666666-298.666666a21.333333 21.333333 0 0 1 30.293334 30.293333l-298.666667 298.666667A21.333333 21.333333 0 0 1 341.333333 533.333333z" />
+              </svg>
+            </div>
 
-
-    <div class="slider-container px-[5%]">
-      <div class="slider" #slider>
-
-        <!-- <div *ngFor="let book of books" class="card min-w-[180px] max-w-[200px] bg-white shadow-lg rounded-lg overflow-hidden m-5"> -->
-          
-          <div class="flex flex-wrap justify-center">
-            <div *ngFor="let book of books" (click)="goToBookDetails(book.id)" class="book-card cursor-pointer m-4 max-w-xs shadow-lg rounded-lg overflow-hidden bg-white transition-transform transform hover:scale-105">
-              <div class="card-image w-full h-[180px] bg-gray-200 flex items-center justify-center">
-                <img class="object-contain w-full h-full" src="https://m.media-amazon.com/images/I/61HAE8zahLL._AC_UF1000,1000_QL80_.jpg" alt="{{ book.title }}" />
-                <!-- Uncomment the next line and remove the above img tag to use dynamic images -->
-                <!-- <img class="object-contain w-full h-full" [src]="book.sanitizedImageData" alt="{{ book.title }}" /> -->
-              </div>
-              <div class="card-content text-center py-4 px-4">
-                <h3 class="card-title text-lg font-semibold mb-2">{{ book.title }}</h3>
-                <p class="card-author text-gray-600 text-sm mb-2">by {{ book.author }}</p>
-                <div class="card-price text-white text-base font-thin bg-blue-500 rounded-md py-1 px-3 inline-block">
-                  ₹ {{ book.price }}
-                </div>
-              </div>
+            <div class="svg-outer cursor-pointer w-[40px] h-[40px] flex justify-center ml-2 items-center border rounded-full border-[#DCDCDC] hover:bg-[#CD6D17] hover:border-none" (click)="scrollRight()">
+              <svg xmlns="http://www.w3.org/2000/svg" class="svg-icon" width="20" height="20" fill="#333333"
+                viewBox="0 0 1024 1024" version="1.1">
+                <path
+                  d="M682.666667 533.333333a21.333333 21.333333 0 0 1-15.146667-6.186666l-298.666667-298.666667a21.333333 21.333333 0 0 1 30.293334-30.293333l298.666666 298.666666a21.333333 21.333333 0 0 1 0 30.293334A21.333333 21.333333 0 0 1 682.666667 533.333333z" />
+                <path
+                  d="M384 832a21.333333 21.333333 0 0 1-15.146667-6.186667 21.333333 21.333333 0 0 1 0-30.293333l298.666667-298.666667a21.333333 21.333333 0 0 1 30.293333 30.293334l-298.666666 298.666666A21.333333 21.333333 0 0 1 384 832z" />
+              </svg>
             </div>
           </div>
-          
-
-
-      <!-- </div> -->
-
-
+        </div>
+        <hr>
+        <div class="w-full overflow-x-auto whitespace-nowrap my-5 no-scrollbar" #bookContainer>
+          <div class="flex space-x-20">
+            <div *ngFor="let book of books; let i = index" class="book-container text-xl mt-5">
+              <app-book-card [book]="book" (addToCart)="addBookToCart($event)"
+                (navigatBook)="goToBookDetails($event)"></app-book-card>
+            </div>
+          </div>
+        </div>
       </div>
+</ng-container>
 
 
-    </div>
-  </div>
-  </ng-container>
   
 
         <!-- <div class="slider-nav absolute top-[40%] left-0 right-0 flex items-center justify-between px-4">

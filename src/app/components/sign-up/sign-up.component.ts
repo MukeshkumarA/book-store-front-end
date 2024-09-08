@@ -6,6 +6,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { User } from '../../services/user.service';
+import { Route, Router } from '@angular/router';
 
 @Component({
   selector: 'app-sign-up',
@@ -29,7 +30,7 @@ export class SignUpComponent {
     phoneNumber: ''
   };
 
-  constructor(private dialogRef: MatDialogRef<SignUpComponent>) { }
+  constructor(private dialogRef: MatDialogRef<SignUpComponent>, private router: Router) { }
 
   // onSubmit() {
     // this.authService.signup(this.signupData).subscribe(response => {
@@ -42,7 +43,7 @@ export class SignUpComponent {
   // }
 
   onSubmit(signupForm: NgForm){
-
+    this.router.navigate(['/']);
   }
 
   ClosePopup(): void {

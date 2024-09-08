@@ -7,11 +7,12 @@ import { ActivatedRoute } from '@angular/router';
 import { BestSellersComponent } from "../best-sellers/best-sellers.component";
 import { CommonService } from '../../common/common';
 import { CartItem, CartService } from '../../services/cart.service';
+import { RatingsComponent } from "../ratings/ratings.component";
 
 @Component({
   selector: 'app-book-details',
   standalone: true,
-  imports: [CommonModule, BestSellersComponent],
+  imports: [CommonModule, BestSellersComponent, RatingsComponent],
   templateUrl: './book-details.component.html',
   styleUrl: './book-details.component.css',
   providers: [BookService]

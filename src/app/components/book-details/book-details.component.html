@@ -1,50 +1,54 @@
+<div *ngIf="bookDetails; else loading" class="my-[5%]">
+  <div class="flex mx-[15%] justify-center text-[#484848]"> 
+    <div class="flex-0 bg-[#F7F7F7] mr-5 p-5 pr-10">
+      <img class="max-h-[300px] object-contain"
+      src="https://cdn.shopify.com/s/files/1/0648/3066/9017/products/9780241551820.jpg.f916736674.999xx_360x.jpg?v=1680623337" alt="{{ bookDetails.title }}" />
+    </div>
 
-<div *ngIf="bookDetails; else loading" class="w-full flex justify-center">
-  <div class="w-[60%] bg-white mt-[2%] p-5 rounded shadow-lg">
-    <div class="book-details-container flex justify-center py-[2%]">
-      <div class="book-image-container w-[30%] mr-[5%]">
-        <div class="book-image h-[350px] transform-sm transition-transform transform hover:scale-105">
-          <!-- <img class="object-contain max-w-full max-h-full" src="https://m.media-amazon.com/images/I/61HAE8zahLL._AC_UF1000,1000_QL80_.jpg" [alt]="bookDetails.title" /> -->
-          <!-- <img class="object-contain max-w-full max-h-full" [src]="bookDetails.sanitizedImageData" [alt]="bookDetails.title" /> -->
-          <img class="max-h-[230px] object-contain"
-          src="https://www.99booksstore.com/uploaded_files/product/258492495.jpg" alt="{{ bookDetails.title }}" />
-        </div>
+    <div class="mr-5 capitalize py-5 px-8">
+      <div class="text-xl font-medium text-[#484848] text-ellipsis overflow-hidden">{{ bookDetails.title.toLowerCase() }}</div>
+      <div class="mt-5 text-[#D65A31] text-[16px]">{{ bookDetails.author.toUpperCase()  }}</div>
+      <div class="flex mt-2">
+        <app-ratings [rating]="(bookDetails.rating)? bookDetails.rating : 0"></app-ratings>
+        <div class="mx-5 text-[#eabdbd]">ISBN {{ bookDetails.isbn }}</div>
       </div>
-      <div class="book-info">
-        <p class="text-2xl text-ellipsis font-medium">{{bookDetails.title}}</p>
-        <p class="mt-[-10px]" >Author: <span class="text-[#43A047] mx-1">{{bookDetails.author}}</span></p>
-        <p>ISBN: <span>{{bookDetails.isbn}}</span></p>
-        <p>Genre: <span>{{bookDetails.genre}}</span></p>
-        <!-- <p>Published on: <span>{{bookDetails.publicationDate}}</span></p> -->
-        <p ><span class="price font-medium text-2xl">{{bookDetails.price | currency}} </span><span class="price line-through ml-3 text-xl">{{bookDetails.price + 30 | currency}}</span></p>
+      <div class="cost mt-3 flex items-end">
+        <div class="text-2xl mr-5 font-medium">₹ {{ bookDetails.price }}</div>
+        <div class="text-[18px] text-[#666666] font-medium line-through">₹ {{ bookDetails.price + (bookDetails.price / 2) }}</div>
+      </div>
+      <div class="quantity flex w-[70%] space-x-1 mt-5">
+        <div class="border-2 border-[#c8bfbf] px-4 py-3 rounded-sm hover:border-none hover:cursor-pointer hover:bg-[#77b748] hover:text-white transition-all" (click)="decrementQuantity()"> - </div>
+        <div class="flex-1 border-2 border-[#c8bfbf] px-5 py-3 text-center rounded-sm hover:border-2 hover:border-[#77b748]"> {{ quantity }} </div>
+        <div class=" border-2 border-[#c8bfbf] px-4 py-3 rounded-sm hover:border-none hover:cursor-pointer hover:bg-[#77b748] hover:text-white transition-all" (click)="addQuantity()"> + </div>
+      </div>
+      <div class="w-[60%] mt-5 p-3 bg-[#77B748] text-center text-white rounded-lg cursor-pointer hover:opacity-2" (click)="addBookToCart(bookDetails)">
+        Add to cart
+      </div>
+    </div>
 
-        <div class="flex items-center mt-10">
-          <div class="w-[120px] h-[50px] flex items-center border border-gray-300 rounded-md bg-white shadow-sm">
-            <button class="text-xl w-1/3 text-center rounded-l-md text-gray-700 cursor-pointer border-r border-gray-300 hover:bg-gray-100" (click)="decrementQuantity()">-</button>
-            <div class="w-1/3 text-center text-gray-700">{{quantity}}</div>
-            <button class="text-xl w-1/3 text-center rounded-r-md text-gray-700 cursor-pointer border-l border-gray-300 hover:bg-gray-100" (click)="addQuantity()">+</button>
-          </div>
-          <div class="ml-5 ">
-            <button class="h-[50px] px-4 py-2 rounded-md bg-blue-500 text-white hover:bg-blue-600 shadow-md" (click)="addBookToCart(bookDetails)" >Add to cart</button>
-          </div>
-        </div>
-
+    <div class=" py-5">
+      <div class="pb-2">Book Details</div>
+      <hr>
+      <div class="capitalize pr-10 mt-5 space-y-2">
+        <div>Publisher : {{ bookDetails.publisher?.toLowerCase() }}</div>
+        <div>Language : {{ bookDetails.language.toLowerCase() }}</div>
+        <div>ISBN : {{ bookDetails.isbn }}</div>
+        <div>Genre : {{ bookDetails.genre.toLowerCase() }}</div>
+        <div>Dimensions : {{ bookDetails.dimensions }}</div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- <ng-template #loading>
+<ng-template #loading>
   <p>Loading book details...</p>
-</ng-template> -->
+</ng-template>
 
-<!-- 
+
 <ng-container>
   <div *ngIf="bookDetails" class="mt-8">
     <app-best-sellers  [currentBook]="bookDetails"></app-best-sellers>
   </div>
-</ng-container> -->
-
-
+</ng-container>
 
 <!-- flex border-2 border-red-500 rounded-md bg-gray-500 -->

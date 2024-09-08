@@ -1,22 +1,58 @@
-import { Injectable } from "@angular/core";
+import { Inject, Injectable, PLATFORM_ID } from "@angular/core";
 import { environment } from "../environment";
 import { HttpClient } from "@angular/common/http";
-import { catchError, Observable, tap, throwError } from "rxjs";
+import { BehaviorSubject, catchError, Observable, tap, throwError } from "rxjs";
 import { response } from "express";
+import { isPlatformBrowser } from "@angular/common";
 
 
 @Injectable({
   providedIn: "root"
 })
 export class AuthService {
-  private baseUrl = `${environment.apiUrl}/auth`;
 
-  constructor(private http: HttpClient) {}
+  private baseUrl = `${environment.apiUrl}/auth`;
+  private loggedIn = new BehaviorSubject<boolean>(this.hasToken());
+  private loggedRole = new BehaviorSubject<string>(this.getStoredRole());
+
+  isLoggedIn$ = this.loggedIn.asObservable();
+  loggedRole$ = this.loggedRole.asObservable();
+
+  // isLoggedIn$: Observable<boolean>;
+  // loggedRole$: Observable<string>;
+
+  constructor(
+    private http: HttpClient,
+    @Inject(PLATFORM_ID) private platformId: any
+  ) {
+    // this.loggedIn = new BehaviorSubject<boolean>(this.hasToken());
+    // this.loggedRole = new BehaviorSubject<string>(this.getStoredRole());
+
+    // this.isLoggedIn$ = this.loggedIn.asObservable();
+    // this.loggedRole$ = this.loggedRole.asObservable();
+  }
+
+  private hasToken(): boolean {
+    if (isPlatformBrowser(this.platformId)) {
+      return !!localStorage.getItem('access_token');
+    }
+    return false;
+  }
+
+  private getStoredRole(): string {
+    if (isPlatformBrowser(this.platformId)) {
+      return localStorage.getItem('loggedUser_role') || '';
+    }
+    return '';
+  }
 
   register(email: string, password: string, firstName: string, lastName: string): Observable<any> {
     return this.http.post<any>(`${this.baseUrl}/register`, { email, password, firstName, lastName }).pipe(
       tap(response => {
-        localStorage.setItem('access_token', response.access_token);
+        if (isPlatformBrowser(this.platformId)) {
+          localStorage.setItem('access_token', response.access_token);
+        }
+        this.loggedIn.next(true);
       }),
       catchError(this.handleError)
     );
@@ -25,24 +61,37 @@ export class AuthService {
   login(email: string, password: string): Observable<any> {
     return this.http.post<any>(`${this.baseUrl}/login`, { email, password }).pipe(
       tap(response => {
-        localStorage.setItem('access_token', response.access_token); // token
-        localStorage.setItem('logged_userId', response.userId); // userid
-        localStorage.setItem('loggedUser_role', response.role); // role
-        localStorage.setItem('isUserLoggedIn', "true"); // boolean
+        if (isPlatformBrowser(this.platformId)) {
+          localStorage.setItem('access_token', response.access_token); // token
+          localStorage.setItem('logged_userId', response.userId); // userid
+          localStorage.setItem('loggedUser_role', response.role); // role
+          localStorage.setItem('isUserLoggedIn', "true"); // boolean
+        }
+        console.log('Login successful, updating subjects');
+        this.loggedIn.next(true);
+        this.loggedRole.next(response.role);
+        
       }),
       catchError(this.handleError)
     );
   }
 
   getToken(): string | null {
-    return localStorage.getItem('access_token');
+    if (isPlatformBrowser(this.platformId)) {
+      return localStorage.getItem('access_token');
+    }
+    return null;
   }
 
   logout(): void {
-    localStorage.removeItem('access_token');
-    localStorage.removeItem('logged_userId');
-    localStorage.removeItem('loggedUser_role');
-    localStorage.setItem('isUserLoggedIn', "false");
+    if (isPlatformBrowser(this.platformId)) {
+      localStorage.removeItem('access_token');
+      localStorage.removeItem('logged_userId');
+      localStorage.removeItem('loggedUser_role');
+      localStorage.setItem('isUserLoggedIn', "false");
+    }
+    this.loggedIn.next(false);
+    this.loggedRole.next("");
   }
 
   private handleError(error: any): Observable<never> {
@@ -50,22 +99,19 @@ export class AuthService {
     return throwError(error);
   }
 
-  isLoggedIn(){
-    return (localStorage.getItem("isUserLoggedIn") == 'true') ? true : false;
-  }
-
-  getLoggedUserId() {
-    if(localStorage.getItem('logged_userId'))
-      return localStorage.getItem('logged_userId');
+  getLoggedUserId(): string | undefined {
+    if (isPlatformBrowser(this.platformId)) {
+      return localStorage.getItem('logged_userId') || undefined;
+    }
     return undefined;
   }
 
-  getLoggedUserRole() {
-    if(localStorage.getItem('loggedUser_role'))
-      return localStorage.getItem('loggedUser_role');
+  getLoggedUserRole(): string | undefined {
+    if (isPlatformBrowser(this.platformId)) {
+      return localStorage.getItem('loggedUser_role') || undefined;
+    }
     return undefined;
   }
 
-  
 
 }
