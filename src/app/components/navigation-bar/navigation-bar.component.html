@@ -22,7 +22,7 @@
           </li>
   
           <!-- Admin Add Book option -->
-          <li *ngIf="isAdminLoggedIn() | async" [ngClass]="{ 'active': isActive('/admin/addbook')}">
+          <li *ngIf="isAdminLoggedIn() | async" [ngClass]="{ 'active': isActive('/admin/addbook')}" (click)="goToAddBookComponent()">
             <a class="no-underline text-inherit">Add Book</a>
           </li>
   

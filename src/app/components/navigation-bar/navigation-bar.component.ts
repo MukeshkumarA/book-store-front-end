@@ -98,28 +98,28 @@ export class NavigationBarComponent implements OnInit {
     alert("Logged out successfully.");
   }
 
-  // navigateToCartPage() {
-  //   if (!this.isLoggedIn$) {
-  //     this.router.navigate(['cart']);
-  //   }
-  //   else {
-  //     const id = this.getUserId();
-  //     this.router.navigate(['cart', id]);
-  //   }
-  // }
-
-  navigateToCartPage(): void {
-    this.isLoggedIn$.pipe(
-      map(isLoggedIn => {
-        if (!isLoggedIn) {
-          this.router.navigate(['cart']);
-        } else {
-          const id = this.getUserId();
-          this.router.navigate(['cart', id]);
-        }
-      })
-    ).subscribe(); // Subscribe to trigger the navigation
+  navigateToCartPage() {
+    if (!this.isLoggedIn$) {
+      this.router.navigate(['cart']);
+    }
+    else {
+      const id = this.getUserId();
+      this.router.navigate(['cart', id]);
+    }
   }
+
+  // navigateToCartPage(): void {
+  //   this.isLoggedIn$.pipe(
+  //     map(isLoggedIn => {
+  //       if (!isLoggedIn) {
+  //         this.router.navigate(['cart']);
+  //       } else {
+  //         const id = this.getUserId();
+  //         this.router.navigate(['cart', id]);
+  //       }
+  //     })
+  //   ).subscribe(); // Subscribe to trigger the navigation
+  // }
 
   isActive(route: string): boolean {
     return this.router.url === route;
