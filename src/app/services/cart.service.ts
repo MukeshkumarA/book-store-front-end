@@ -21,7 +21,8 @@ export interface CartItem {
   providedIn: 'root'
 })
 export class CartService {
-  private baseUrl = `${environment.apiUrl}/cart`;
+  private url = environment.apiUrl + '/bookstore/api/v1';
+  private baseUrl = `${this.url}/cart`;
 
   constructor(private apiService: ApiService, private authService: AuthService) { }
 

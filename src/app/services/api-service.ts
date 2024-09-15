@@ -13,7 +13,8 @@ import { User } from "./user.service";
   providedIn: 'root'
 })
 export class ApiService {
-  private baseUrl = environment.apiUrl;
+  private url = environment.apiUrl;
+  private baseUrl = this.url + '/bookstore/api/v1';
 
   // private _headers = new HttpHeaders().set('Authorization', `Bearer ${this.token}`);
 

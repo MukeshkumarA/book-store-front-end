@@ -10,8 +10,8 @@ import { isPlatformBrowser } from "@angular/common";
   providedIn: "root"
 })
 export class AuthService {
-
-  private baseUrl = `${environment.apiUrl}/auth`;
+ private apiUrl = environment.apiUrl + '/bookstore/api/v1';
+  private baseUrl = `${this.apiUrl}/auth`;
   private loggedIn = new BehaviorSubject<boolean>(this.hasToken());
   private loggedRole = new BehaviorSubject<string>(this.getStoredRole());
 
