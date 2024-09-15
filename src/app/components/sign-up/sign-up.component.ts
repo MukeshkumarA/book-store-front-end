@@ -7,6 +7,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { User } from '../../services/user.service';
 import { Route, Router } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-sign-up',
@@ -30,20 +31,18 @@ export class SignUpComponent {
     phoneNumber: ''
   };
 
-  constructor(private dialogRef: MatDialogRef<SignUpComponent>, private router: Router) { }
+  constructor(private dialogRef: MatDialogRef<SignUpComponent>, private router: Router, private authService: AuthService) { }
 
-  // onSubmit() {
-    // this.authService.signup(this.signupData).subscribe(response => {
-    //   console.log('User registered successfully:', response);
-    //   // Handle success response (e.g., navigate to login page, show success message, etc.)
-    // }, error => {
-    //   console.error('Registration error:', error);
-    //   // Handle error response (e.g., show error message)
-    // });
-  // }
-
-  onSubmit(signupForm: NgForm){
-    this.router.navigate(['/']);
+  onSubmit(signUpForm: NgForm) {
+    const data = this.signupData;
+    this.authService.register(data.email, data.password, data.firstName, data.lastName, data.role, data.address, data.phoneNumber).subscribe(response => {
+      console.log('User registered successfully:', response);
+      this.ClosePopup();
+      this.router.navigate(['']);
+    }, error => {
+      console.error('Registration error:', error);
+      this.ClosePopup();
+    });
   }
 
   ClosePopup(): void {

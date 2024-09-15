@@ -43,12 +43,12 @@ export class BookCategoriesComponent {
 
   mapBooksWithGenre(books: Book[]) {
     books.forEach(book => {
-      if(this.booksGenre.has(book.genre)){
-        const genreBooks = this.booksGenre.get(book.genre);
+      if(this.booksGenre.has(book.genre.toLowerCase())){
+        const genreBooks = this.booksGenre.get(book.genre.toLowerCase());
         genreBooks?.push(book);
       }
       else{
-        this.booksGenre.set(book.genre, [book]);
+        this.booksGenre.set(book.genre.toLowerCase(), [book]);
       }
     });
 

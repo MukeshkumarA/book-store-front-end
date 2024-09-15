@@ -99,15 +99,30 @@ export class BookListComponent {
     this.paginateBooks();
   }
 
-  addBookToCart(book: Book){
+  // addBookToCart(book: Book){
+  //   const cartItem: CartItem = {
+  //     bookId: book.id as number,
+  //     quantity: 1,
+  //     price: book.price,
+  //     totalPrice: book.price,
+  //     title: book.title
+  //   }
+  //   this.cartService.addToCart(cartItem);
+  // }
+
+  addBookToCart(book: Book) {
     const cartItem: CartItem = {
       bookId: book.id as number,
       quantity: 1,
       price: book.price,
-      totalPrice: book.price,
+      totalPrice: book.price * 1,
       title: book.title
     }
-    this.cartService.addToCart(cartItem);
+    // this.cartService.addToCart(cartItem);
+    this.cartService.addToCart(cartItem).subscribe(
+      () => console.log('Item added to cart successfully'),
+      error => console.error('Error adding item to cart', error)
+    );
   }
   
 

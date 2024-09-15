@@ -24,8 +24,9 @@
       </div>
       <div class="flex flex-col">
         <label for="email" class="text-gray-700">Email</label>
+        <!-- pattern="[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$" -->
         <input type="email" id="email" name="email" [(ngModel)]="signupData.email" required #emailInput="ngModel"
-          pattern="[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$"
+          
           class="w-full p-2 border border-gray-300 rounded" />
         <span class="text-red-500 text-sm mt-1 font-medium" *ngIf="!emailInput.value && emailInput.touched">Email is
           required!</span>
@@ -34,8 +35,9 @@
       </div>
       <div class="flex flex-col">
         <label for="password" class="text-gray-700">Password</label>
+        <!-- pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,12}$" -->
         <input type="password" id="password" name="password" [(ngModel)]="signupData.password" required
-          #passwordInput="ngModel" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,12}$"
+          #passwordInput="ngModel" 
           class="w-full p-2 border border-gray-300 rounded" />
         <span class="text-red-500 text-sm mt-1 font-medium"
           *ngIf="!passwordInput.value && passwordInput.touched">Password is required!</span>
@@ -61,8 +63,9 @@
       </div>
       <div class="flex flex-col">
         <label for="phoneNumber" class="text-gray-700">Phone Number</label>
+        <!-- pattern="\d{10}" -->
         <input type="tel" id="phoneNumber" name="phoneNumber" [(ngModel)]="signupData.phoneNumber" required
-          #phoneNumberInput="ngModel" pattern="\d{10}" (keydown)="allowOnlyNumbers($event)"  class="w-full p-2 border border-gray-300 rounded" />
+          #phoneNumberInput="ngModel"  (keydown)="allowOnlyNumbers($event)"  class="w-full p-2 border border-gray-300 rounded" />
         <span class="text-red-500 text-sm mt-1 font-medium"
           *ngIf="!phoneNumberInput.value && phoneNumberInput.touched">Phone Number is required!</span>
         <span class="text-red-500 text-sm mt-1 font-medium"

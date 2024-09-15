@@ -4,6 +4,8 @@
     cursor: pointer;
 }
 
-.active {
-    color: green;
+.nav-list .active {
+    /* font-weight: 500; */
+    color: green; /* Or any other style you want for the active link */
+    font-weight: 500;
 }

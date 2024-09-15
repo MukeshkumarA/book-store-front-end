@@ -1,5 +1,5 @@
 import { Inject, Injectable, PLATFORM_ID } from "@angular/core";
-import { environment } from "../environment";
+import { environment } from "../environment/environment";
 import { HttpClient } from "@angular/common/http";
 import { BehaviorSubject, catchError, Observable, tap, throwError } from "rxjs";
 import { response } from "express";
@@ -46,13 +46,13 @@ export class AuthService {
     return '';
   }
 
-  register(email: string, password: string, firstName: string, lastName: string): Observable<any> {
-    return this.http.post<any>(`${this.baseUrl}/register`, { email, password, firstName, lastName }).pipe(
+  register(email: string, password: string, firstName: string, lastName: string, role: string, address: string, phoneNumber: string): Observable<any> {
+    return this.http.post<any>(`${this.baseUrl}/register`, { email, password, firstName, lastName, role, address, phoneNumber  }).pipe(
       tap(response => {
         if (isPlatformBrowser(this.platformId)) {
           localStorage.setItem('access_token', response.access_token);
         }
-        this.loggedIn.next(true);
+        // this.loggedIn.next(true);
       }),
       catchError(this.handleError)
     );
@@ -66,11 +66,10 @@ export class AuthService {
           localStorage.setItem('logged_userId', response.userId); // userid
           localStorage.setItem('loggedUser_role', response.role); // role
           localStorage.setItem('isUserLoggedIn', "true"); // boolean
+          console.log('Login successful, updating subjects');
+          this.loggedIn.next(true);
+          this.loggedRole.next(response.role);
         }
-        console.log('Login successful, updating subjects');
-        this.loggedIn.next(true);
-        this.loggedRole.next(response.role);
-        
       }),
       catchError(this.handleError)
     );

@@ -1,8 +1,10 @@
 <div *ngIf="bookDetails; else loading" class="my-[5%]">
   <div class="flex mx-[15%] justify-center text-[#484848]"> 
     <div class="flex-0 bg-[#F7F7F7] mr-5 p-5 pr-10">
+      <!-- <img class="max-h-[300px] object-contain"
+      src="https://cdn.shopify.com/s/files/1/0648/3066/9017/products/9780241551820.jpg.f916736674.999xx_360x.jpg?v=1680623337" alt="{{ bookDetails.title }}" /> -->
       <img class="max-h-[300px] object-contain"
-      src="https://cdn.shopify.com/s/files/1/0648/3066/9017/products/9780241551820.jpg.f916736674.999xx_360x.jpg?v=1680623337" alt="{{ bookDetails.title }}" />
+      [src]="bookDetails.sanitizedImageData" alt="{{ bookDetails.title }}" />
     </div>
 
     <div class="mr-5 capitalize py-5 px-8">

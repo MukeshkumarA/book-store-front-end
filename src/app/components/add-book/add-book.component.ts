@@ -29,6 +29,7 @@ export class AddBookComponent {
     publisher: undefined,
     pageCount: 0,
     format: undefined,
+    rating: 0,
     dimensions: undefined,
     imageData: undefined, // Changed to null
   };

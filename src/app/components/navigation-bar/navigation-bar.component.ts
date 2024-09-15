@@ -39,7 +39,7 @@ export class NavigationBarComponent implements OnInit {
   ngOnInit() {
     console.log("navigation on init");
     this.isLoggedIn$.subscribe((status) => {
-      console.log('Login status changed:', status);  // Add this to verify subscription
+      console.log('Login status changed:', status);  
       if (status) {
         this.setLoggedUserName();
       } else {
@@ -48,7 +48,7 @@ export class NavigationBarComponent implements OnInit {
     });
 
     this.loggedRole$.subscribe((role) => {
-      console.log('User role changed:', role);  // Add this to verify role changes
+      console.log('User role changed:', role);  
     });
   }
 
@@ -94,22 +94,37 @@ export class NavigationBarComponent implements OnInit {
   logout(): void {
     this.authService.logout();
     this.router.navigate(['/']);
+    console.log(this.isLoggedIn$);
     alert("Logged out successfully.");
   }
 
-  navigateToCartPage() {
-    if (!this.isLoggedIn$) {
-      this.router.navigate(['cart']);
-    }
-    else {
-      const id = this.getUserId();
-      this.router.navigate(['cart', id]);
-    }
+  // navigateToCartPage() {
+  //   if (!this.isLoggedIn$) {
+  //     this.router.navigate(['cart']);
+  //   }
+  //   else {
+  //     const id = this.getUserId();
+  //     this.router.navigate(['cart', id]);
+  //   }
+  // }
+
+  navigateToCartPage(): void {
+    this.isLoggedIn$.pipe(
+      map(isLoggedIn => {
+        if (!isLoggedIn) {
+          this.router.navigate(['cart']);
+        } else {
+          const id = this.getUserId();
+          this.router.navigate(['cart', id]);
+        }
+      })
+    ).subscribe(); // Subscribe to trigger the navigation
   }
 
   isActive(route: string): boolean {
     return this.router.url === route;
   }
+
 
   //  checkLoggedInStatus(){
   //   if(this.authService.isLoggedIn())
@@ -151,5 +166,6 @@ export class NavigationBarComponent implements OnInit {
   //   //   this.animal = result;
   //   // });
   // } 
+
 
 }
