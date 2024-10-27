@@ -32,8 +32,11 @@ export class BookCardComponent {
   }
 
 
-  addBookToCart(book: Book) {
+  addBookToCart(event : MouseEvent, book: Book) {
+    console.log('Adding book to cart: book cart comp', book);
+    event.stopPropagation();
     this.addToCart.emit(book);
+    
   }
 
 }

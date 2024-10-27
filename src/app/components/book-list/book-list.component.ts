@@ -13,6 +13,8 @@ import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { CommonService } from '../../common/common';
 import { CartItem, CartService } from '../../services/cart.service';
 import { BookCardComponent } from "../book-card/book-card.component";
+import { MessageService } from '../../services/message.service';
+import { UserNotLoggedInError } from '../../userNotLoggedInError';
 
 
 @Component({
@@ -20,8 +22,7 @@ import { BookCardComponent } from "../book-card/book-card.component";
   standalone: true,
   imports: [CommonModule, RatingsComponent, SearchBooksComponent, BookCardComponent],
   templateUrl: './book-list.component.html',
-  styleUrl: './book-list.component.css',
-  providers: [BookService]
+  styleUrl: './book-list.component.css'
 })
 export class BookListComponent {
 
@@ -32,7 +33,7 @@ export class BookListComponent {
   totalItems = 0;
 
   constructor(private bookService: BookService, private router: Router, private sanitizer: DomSanitizer, private commonService: CommonService,
-    private cartService: CartService
+    private cartService: CartService, private messageService: MessageService
   ) {
     this.loadBooks();
   }
@@ -118,10 +119,17 @@ export class BookListComponent {
       totalPrice: book.price * 1,
       title: book.title
     }
-    // this.cartService.addToCart(cartItem);
     this.cartService.addToCart(cartItem).subscribe(
-      () => console.log('Item added to cart successfully'),
-      error => console.error('Error adding item to cart', error)
+      () => this.messageService.showMessage('Item added to cart'),
+      error => {
+        if(error instanceof UserNotLoggedInError)
+          {
+            this.messageService.showMessage('Item added to cart');
+            console.log("User not logged in");
+          }
+        else
+          console.log('Error adding item to cart', error)
+      }
     );
   }
   

@@ -6,6 +6,7 @@ import { environment } from "../environment/environment";
 import { Cart } from "../components/cart/cart-mode";
 import { ApiService } from "./api-service";
 import { AuthService } from "./auth.service";
+import { UserNotLoggedInError } from "../userNotLoggedInError";
 
 export interface CartItem {
   id?: number;
@@ -40,29 +41,24 @@ export class CartService {
   addToCart(cartItem: CartItem): Observable<void> {
     if (localStorage.getItem("isUserLoggedIn") === "true") {
       const userId = this.authService.getLoggedUserId() as string;
-      return this.apiService.getCart(parseInt(userId)).pipe(
-        switchMap(cart => {
-          const existingItem = cart.cartItems.find(item => item.bookId === cartItem.bookId);
-          if (existingItem) {
-            // updating the quantity if item already exists
-            existingItem.quantity += cartItem.quantity;
-            return this.apiService.updateCartItem(existingItem);
-          } else {
-            // adding as new if not exist
-            return this.apiService.addToCart(cartItem);
-          }
-        }),
-        catchError(error => {
-          console.error('Failed to add item to cart', error);
-          return throwError(() => new Error('Failed to add item to cart'));
-        })
-      );
+  
+      // Directly attempt to add the cart item; the backend will handle the cart creation if it doesn't exist
+      // return this.apiService.addToCart(cartItem).pipe(
+      //   catchError(error => {
+      //     console.error('Failed to add item to cart', error);
+      //     return throwError(() => new Error('Failed to add item to cart'));
+      //   })
+      // );
+      return this.apiService.addToCart(cartItem);
     } else {
       this.storeItemInSessionCart(cartItem);
-      // return "";
-      return throwError(() => new Error('User not logged in'));
+      return throwError(() => new UserNotLoggedInError());
     }
   }
+  
+
+  
+  
 
   // addToCart(cartItem: CartItem): Observable<void> {
   //   if (localStorage.getItem("isUserLoggedIn") === "true") {
@@ -104,38 +100,45 @@ export class CartService {
   }
 
   storeItemInSessionCart(item: CartItem): void {
-    let cart: CartItem[] = JSON.parse(sessionStorage.getItem('sessionCart') || '[]');
+    let cart: CartItem[] = JSON.parse(localStorage.getItem('sessionCart') || '[]');
     const existingItem = cart.find(cartItem => cartItem.bookId === item.bookId);
   
     if (existingItem) {
       // Update existing item's quantity and totalPrice
-      existingItem.quantity = item.quantity;
+      existingItem.quantity += item.quantity;
       existingItem.totalPrice = existingItem.quantity * existingItem.price;
     } else {
       // Add new item to cart
       cart.push(item);
     }
-  
-    sessionStorage.setItem('sessionCart', JSON.stringify(cart));
+
+    localStorage.setItem('sessionCart', JSON.stringify(cart));
+    // sessionStorage.setItem('sessionCart', JSON.stringify(cart));
   }
-  
   
 
 
   getSessionCart(): CartItem[] {
-    return JSON.parse(sessionStorage.getItem('sessionCart') || '[]');
+    console.log(localStorage.getItem('sessionCart'));
+    return JSON.parse(localStorage.getItem('sessionCart') || '[]');
   }
 
-  clearSessionCart(): void {
-    sessionStorage.removeItem('sessionCart');
+  clearSessionCart(): boolean {
+    if(localStorage.getItem('sessionCart') != undefined)
+    {
+      localStorage.removeItem('sessionCart');
+      return true;
+    }
+
+    return false;
   }
 
   removeFromSessionCart(item: CartItem): boolean {
-    let cartItems: CartItem[] = JSON.parse(sessionStorage.getItem('sessionCart') || '[]');
+    let cartItems: CartItem[] = JSON.parse(localStorage.getItem('sessionCart') || '[]');
     const itemIndex = cartItems.findIndex(cartItem => cartItem.bookId === item.bookId);
     if (itemIndex === -1) return false;
     cartItems.splice(itemIndex, 1);
-    sessionStorage.setItem('sessionCart', JSON.stringify(cartItems));
+    localStorage.setItem('sessionCart', JSON.stringify(cartItems));
     return true;
   }
 

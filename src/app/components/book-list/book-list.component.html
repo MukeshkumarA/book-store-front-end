@@ -9,58 +9,7 @@
 <ng-container>
     <div *ngIf="books.length > 0; else nobooks" class="flex flex-wrap justify-center px-[10%] py-[2%]">
         <div *ngFor="let book of paginatedBooks; let i = index" class="book-container text-xl p-4 m-2 ">
-            <!-- <div class="flex flex-col items-cente bg-white border-none rounded shadow-md m-4">
-                <div class="w-[270px] h-[200px] flex items-center justify-center" (click)="navigateToBookDetails(book.id)">
-                    <div class="flex items-center justify-center p-1" style="width: calc(100% - 20%)">
-                        <img class="w-[60%] object-contain" [src]="book.sanitizedImageData" alt="{{ book.title }} cover image" />
-                    </div>
-                </div>
-                <div class="meta  items-center text-left pl-5" (click)="navigateToBookDetails(book.id)">
-                    <div class="text-ellipsis overflow-hidden ">{{ book.title }}</div>
-                    <div class="text-[#AE001D] text-transform: capitalize tracking-widesttext-ellipsis overflow-hidden text-[18px]"><span class="text-transform: lowercase text-[15px]">by </span>{{ book.author }}</div>
-                    <div class="text-[16px]"> <span class="font-semibold">₹</span> {{ book.price }}</div>
-                </div>
-                <div class="flex justify-around w-[100%] p-5 bg-[#F3F5F2] rounded-b-md">
-                    <div class="text-[17px] text-[#CD6D17] cursor-pointer" (click)="addBookToCart(book)">Add to cart</div> 
-                    <app-ratings [rating]="(book.rating)? book.rating : 0"></app-ratings>
-                </div>
-            </div> -->
-
-            <!-- <div class="bg-white border-none rounded-md shadow-md m-4 transform-sm transition-transform transform hover:scale-105">
-                <div class="bg-white p-5 flex flex-col w-[280px] h-[300px] rounded-md"  (click)="navigateToBookDetails(book.id)">
-                    <div class="w-full h-2/3 flex justify-center">
-                        <img class="max-w-full object-contain" [src]="book.sanitizedImageData" alt="{{ book.title }} cover image" />
-                    </div>
-                    <div class="mt-3">
-                        <div class="text-ellipsis overflow-hidden ">{{ book.title }}</div>
-                        <div class="text-[#AE001D] text-transform: capitalize tracking-widesttext-ellipsis overflow-hidden text-[18px]"><span class="text-transform: lowercase text-[15px]">by </span>{{ book.author }}</div>
-                        <div class="text-[16px]"> <span class="font-semibold">₹</span> {{ book.price }}</div>
-                    </div>
-                </div>
-                <div class="flex justify-around w-[100%] p-5 bg-[#F3F5F2] rounded-b-md">
-                    <div class="text-[17px] text-[#CD6D17] cursor-pointer hover:font-medium" (click)="addBookToCart(book)">Add to cart</div> 
-                    <app-ratings [rating]="(book.rating)? book.rating : 0"></app-ratings>
-                </div>
-            </div> -->
-
             <app-book-card [book]="book" (addToCart)="addBookToCart($event)" (navigatBook)="navigateToBookDetails($event)"></app-book-card>
-
-                <!-- <div (click)="navigateToBookDetails(book.id)">
-                    <div>
-                        <!-- <img class="max-w-full object-contain" [src]="book.sanitizedImageData" alt="{{ book.title }} cover image" />
-                        <img class="max-h-[230px] object-contain" src="https://cdn.shopify.com/s/files/1/0648/3066/9017/products/9780241551820.jpg.f916736674.999xx_360x.jpg?v=1680623337" alt="{{ book.title }} cover image" />
-                    </div>
-                    <div class="mt-5">
-                        <div class="text-ellipsis overflow-hidden text-[17px]">{{ book.title }}</div>
-                        <div class="text-[#AE001D] font-thin capitalize tracking-widesttext-ellipsis overflow-hidden text-[18px]"><span class="lowercase text-[17px]">by </span>{{ book.author }}</div>
-                        <app-ratings [rating]="(book.rating)? book.rating : 0"></app-ratings>
-                        <div class="text-[16px] text-[#77B748]"> <span class="font-semibold">₹</span> {{ book.price }}</div>
-                    </div>
-                    <div class=" mt-2 w-[100%] bg-white border border-[#DBDBDB] text-center py-2 rounded-full">
-                        <div class="text-[17px] text-[#CD6D17] cursor-pointer hover:font-medium" (click)="addBookToCart(book)">Add to cart</div> 
-                    </div>
-                </div> -->
-
         </div>
     </div>
 

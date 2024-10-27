@@ -8,7 +8,8 @@ import { AuthService } from './auth.service';
 export class AuthGuard implements CanActivate {
   private isLoggedIn: boolean = false;
   constructor(private authService: AuthService, private router: Router) {
-    this.authService.isLoggedIn$.subscribe(status => this.isLoggedIn = status);
+    // this.authService.isLoggedIn$.subscribe(status => this.isLoggedIn = status);
+    this.canActivate
   }
 
   canActivate(

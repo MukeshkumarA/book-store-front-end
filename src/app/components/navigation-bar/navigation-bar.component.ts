@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
+import { ChangeDetectorRef, Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatDialogModule, MatDialogConfig } from '@angular/material/dialog';
 import { SignUpComponent } from '../sign-up/sign-up.component';
 import { LoginComponent } from '../login/login.component';
@@ -10,6 +10,7 @@ import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { UserService } from '../../services/user.service';
 import { stat } from 'node:fs';
 import { map, Observable } from 'rxjs';
+import { MessageService } from '../../services/message.service';
 
 @Component({
   selector: 'app-navigation-bar',
@@ -28,9 +29,10 @@ export class NavigationBarComponent implements OnInit {
     private dialog: MatDialog,
     private router: Router,
     private authService: AuthService,
-    private userService: UserService
+    private userService: UserService,
+    private cdr: ChangeDetectorRef,
+    private messageService: MessageService
   ) {
-    // Initialize the observables by assigning the AuthService observables
     this.isLoggedIn$ = this.authService.isLoggedIn$;
     this.loggedRole$ = this.authService.loggedRole$;
 
@@ -45,6 +47,7 @@ export class NavigationBarComponent implements OnInit {
       } else {
         this.loggedUserName = undefined;
       }
+      this.cdr.detectChanges(); 
     });
 
     this.loggedRole$.subscribe((role) => {
@@ -95,18 +98,20 @@ export class NavigationBarComponent implements OnInit {
     this.authService.logout();
     this.router.navigate(['/']);
     console.log(this.isLoggedIn$);
-    alert("Logged out successfully.");
+    this.messageService.showMessage("Successfully logged out.");
   }
 
   navigateToCartPage() {
-    if (!this.isLoggedIn$) {
-      this.router.navigate(['cart']);
-    }
-    else {
-      const id = this.getUserId();
-      this.router.navigate(['cart', id]);
-    }
+    this.isLoggedIn$.subscribe(value => {
+      if (!value) {
+        this.router.navigate(['cart']);
+      } else {
+        const id = this.getUserId();
+        this.router.navigate(['cart', id]);
+      }
+    });
   }
+  
 
   // navigateToCartPage(): void {
   //   this.isLoggedIn$.pipe(
@@ -122,8 +127,12 @@ export class NavigationBarComponent implements OnInit {
   // }
 
   isActive(route: string): boolean {
-    return this.router.url === route;
+    if (route === '/' && this.router.url === '/') {
+      return true;
+    }
+    return this.router.url.startsWith(route) && route !== '/';
   }
+  
 
 
   //  checkLoggedInStatus(){

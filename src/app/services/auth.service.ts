@@ -10,7 +10,7 @@ import { isPlatformBrowser } from "@angular/common";
   providedIn: "root"
 })
 export class AuthService {
- private apiUrl = environment.apiUrl + '/bookstore/api/v1';
+  private apiUrl = environment.apiUrl + '/bookstore/api/v1';
   private baseUrl = `${this.apiUrl}/auth`;
   private loggedIn = new BehaviorSubject<boolean>(this.hasToken());
   private loggedRole = new BehaviorSubject<string>(this.getStoredRole());
@@ -25,6 +25,8 @@ export class AuthService {
     private http: HttpClient,
     @Inject(PLATFORM_ID) private platformId: any
   ) {
+    this.loggedIn.next(this.hasToken());
+    this.loggedRole.next(this.getStoredRole());
     // this.loggedIn = new BehaviorSubject<boolean>(this.hasToken());
     // this.loggedRole = new BehaviorSubject<string>(this.getStoredRole());
 
@@ -47,7 +49,7 @@ export class AuthService {
   }
 
   register(email: string, password: string, firstName: string, lastName: string, role: string, address: string, phoneNumber: string): Observable<any> {
-    return this.http.post<any>(`${this.baseUrl}/register`, { email, password, firstName, lastName, role, address, phoneNumber  }).pipe(
+    return this.http.post<any>(`${this.baseUrl}/register`, { email, password, firstName, lastName, role, address, phoneNumber }).pipe(
       tap(response => {
         if (isPlatformBrowser(this.platformId)) {
           localStorage.setItem('access_token', response.access_token);
@@ -62,14 +64,17 @@ export class AuthService {
     return this.http.post<any>(`${this.baseUrl}/login`, { email, password }).pipe(
       tap(response => {
         if (isPlatformBrowser(this.platformId)) {
+          console.log(response);
           localStorage.setItem('access_token', response.access_token); // token
           localStorage.setItem('logged_userId', response.userId); // userid
           localStorage.setItem('loggedUser_role', response.role); // role
+          localStorage.setItem('loggedUser_userName', response.firstName); // name
           localStorage.setItem('isUserLoggedIn', "true"); // boolean
           console.log('Login successful, updating subjects');
           this.loggedIn.next(true);
           this.loggedRole.next(response.role);
         }
+        return response;
       }),
       catchError(this.handleError)
     );

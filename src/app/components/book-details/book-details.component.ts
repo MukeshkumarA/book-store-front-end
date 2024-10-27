@@ -8,6 +8,8 @@ import { BestSellersComponent } from "../best-sellers/best-sellers.component";
 import { CommonService } from '../../common/common';
 import { CartItem, CartService } from '../../services/cart.service';
 import { RatingsComponent } from "../ratings/ratings.component";
+import { MessageService } from '../../services/message.service';
+import { UserNotLoggedInError } from '../../userNotLoggedInError';
 
 @Component({
   selector: 'app-book-details',
@@ -15,7 +17,6 @@ import { RatingsComponent } from "../ratings/ratings.component";
   imports: [CommonModule, BestSellersComponent, RatingsComponent],
   templateUrl: './book-details.component.html',
   styleUrl: './book-details.component.css',
-  providers: [BookService]
 })
 export class BookDetailsComponent {
 
@@ -23,10 +24,11 @@ export class BookDetailsComponent {
   quantity: number = 1;
 
   constructor(private bookService: BookService, private route: ActivatedRoute, private commonService: CommonService,
-    private cartService: CartService
+    private cartService: CartService, private messageService: MessageService
   ) {}
 
   ngOnInit(){
+    console.log('BookDetailsComponent initialized');
     // const isbn = this.route.snapshot.paramMap.get('isbn')!;
     const id = this.route.snapshot.paramMap.get('id');
     if(id)
@@ -53,7 +55,9 @@ export class BookDetailsComponent {
         this.quantity --;
   }
 
-  addBookToCart(book: Book) {
+  addBookToCart(event: MouseEvent, book: Book) {
+    event.preventDefault();
+    event.stopPropagation();
     const cartItem: CartItem = {
       bookId: book.id as number,
       quantity: this.quantity,
@@ -63,9 +67,20 @@ export class BookDetailsComponent {
     }
     // this.cartService.addToCart(cartItem);
     this.cartService.addToCart(cartItem).subscribe(
-      () => console.log('Item added to cart successfully'),
-      error => console.error('Error adding item to cart', error)
+      () => this.messageService.showMessage('Item added to cart'),
+      error => {
+        // this.messageService.showMessage('Error adding item to cart');
+        if(error instanceof UserNotLoggedInError)
+        {
+          this.messageService.showMessage('Item added to cart');
+          console.log("User not logged in");
+        }
+        else
+          console.log('Error adding item to cart', error)
+      }
     );
   }
+
+  
 
 }

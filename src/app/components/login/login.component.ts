@@ -1,10 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ViewEncapsulation } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { AuthService } from '../../services/auth.service';
 import { Observable } from 'rxjs';
 import { Route, Router } from '@angular/router';
+import { MessageService } from '../../services/message.service';
 
 
 export interface LoginData {
@@ -20,8 +21,6 @@ export interface LoginData {
   styleUrl: './login.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  providers: [AuthService]
-
 })
 export class LoginComponent {
 
@@ -32,7 +31,7 @@ export class LoginComponent {
   };
 
   constructor(private dialogRef: MatDialogRef<LoginComponent>, private authService: AuthService,
-    private router: Router
+    private router: Router, private cdr: ChangeDetectorRef, private messageService: MessageService
   ) { }
 
   // onSubmit(form: NgForm) {
@@ -52,11 +51,16 @@ export class LoginComponent {
       console.log('Form Submitted!', form.value);
       this.authService.login(form.value.email, form.value.password).subscribe(response => {
         console.log('Login successful:', response);
-        alert("login success");
+        const userName = response.firstName || "User";
+        this.messageService.showMessage(`Login successful! Welcome back ${userName}`);
+        // alert("login success");
         this.dialogRef.close();
+        this.cdr.detectChanges(); 
+        this.router.navigate(['/']);
         // this.router.navigate(['/']);
       }, error => {
         console.error('Login error:', error);
+        this.messageService.showMessage("Login failed. Please check your email and password and try again.");
       });
     } else {
       console.log('Form is invalid');

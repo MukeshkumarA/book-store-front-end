@@ -6,6 +6,9 @@
 
 .nav-list .active {
     /* font-weight: 500; */
-    color: green; /* Or any other style you want for the active link */
-    font-weight: 500;
+    color: white; /* Or any other style you want for the active link */
+    /* font-weight: 500; */
+    background-color: #77B748;
+    padding: 10px;
+    border-radius: 5%;
 }

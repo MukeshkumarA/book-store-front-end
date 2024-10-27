@@ -8,6 +8,7 @@ import { MatInputModule } from '@angular/material/input';
 import { User } from '../../services/user.service';
 import { Route, Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
+import { MessageService } from '../../services/message.service';
 
 @Component({
   selector: 'app-sign-up',
@@ -31,16 +32,20 @@ export class SignUpComponent {
     phoneNumber: ''
   };
 
-  constructor(private dialogRef: MatDialogRef<SignUpComponent>, private router: Router, private authService: AuthService) { }
+  constructor(private dialogRef: MatDialogRef<SignUpComponent>, private router: Router, private authService: AuthService,
+    private messageService: MessageService
+  ) { }
 
   onSubmit(signUpForm: NgForm) {
     const data = this.signupData;
     this.authService.register(data.email, data.password, data.firstName, data.lastName, data.role, data.address, data.phoneNumber).subscribe(response => {
       console.log('User registered successfully:', response);
+      this.messageService.showMessage("Registration successful!");
       this.ClosePopup();
       this.router.navigate(['']);
     }, error => {
       console.error('Registration error:', error);
+      this.messageService.showMessage("Registration failed. Please try again.");
       this.ClosePopup();
     });
   }

@@ -20,6 +20,7 @@
           <li *ngIf="!(isLoggedIn$ | async)" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
             <a (click)="openSignUpDialog()" class="no-underline text-inherit cursor-pointer">Sign Up</a>
           </li>
+
   
           <!-- Admin Add Book option -->
           <li *ngIf="isAdminLoggedIn() | async" [ngClass]="{ 'active': isActive('/admin/addbook')}" (click)="goToAddBookComponent()">

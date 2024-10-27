@@ -12,6 +12,8 @@ import { LoginComponent } from '../login/login.component';
 import { MatDialog } from '@angular/material/dialog';
 import { PopupComponent } from '../popup/popup.component';
 import { RouterModule } from '@angular/router';
+import { error } from 'node:console';
+import { MessageService } from '../../services/message.service';
 
 @Component({
   selector: 'app-cart',
@@ -32,7 +34,8 @@ export class CartComponent {
     private route: ActivatedRoute,
     private bookService: BookService,
     private popupService: PopupService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private messageSerive: MessageService
   ) { }
 
   ngOnInit(): void {
@@ -40,7 +43,8 @@ export class CartComponent {
       if (params['id']) {
         // Load server cart for logged-in users
         this.loadServerCart();
-      } else {
+      }
+       else {
         // Load session cart for non-logged-in users
         this.loadSessionCart();
       }
@@ -62,13 +66,36 @@ export class CartComponent {
     this.fetchBookDetailsForCart(sessionCart);
   }
 
+  // private loadServerCart(): void {
+  //   this.cartService.getCart().subscribe(cart => {
+  //     // this.cart = cart;
+  //     // this.cart.totalPrice = this.calculateTotalPrice(cart.cartItems);
+  //     // this.fetchBookDetailsForCart(cart.cartItems);
+  //     console.log(cart);
+  //   });
+  // }
+
   private loadServerCart(): void {
     this.cartService.getCart().subscribe(cart => {
-      // this.cart = cart;
-      // this.cart.totalPrice = this.calculateTotalPrice(cart.cartItems);
+      // Store the cart data in the component
+      this.cart = cart;
+      console.log(cart);
+      
+      // Optionally calculate the total price (if needed)
+      this.cart.totalPrice = this.calculateTotalPrice(cart.cartItems);
+      
+      // Fetch additional details for cart items (if needed)
       this.fetchBookDetailsForCart(cart.cartItems);
+      
+      // Log the cart for debugging
+      console.log(cart);
+    }, error => {
+      // Handle any error
+      this.messageSerive.showMessage("Error fetching cart");
+      console.error('Error fetching cart:', error);
     });
   }
+  
 
   private fetchBookDetailsForCart(cartItems: CartItem[]): void {
     const bookDetailsRequests = cartItems.map(item =>
@@ -89,11 +116,12 @@ export class CartComponent {
       const sessionCart = this.cartService.getSessionCart();
       sessionCart.forEach(item => {
         this.cartService.addToCart(item).subscribe(() => {
-          this.cartService.clearSessionCart();
           this.loadServerCart();
         });
       });
+      this.cartService.clearSessionCart();
     }
+    this.calculateTotalPrice(this.cart.cartItems);
   }
 
   private calculateTotalPrice(cartItems: CartItem[]): number {
@@ -117,7 +145,7 @@ export class CartComponent {
   
         this.debounceDecrementTimer = setTimeout(() => {
           this.cartService.updateCartItem(updatedItem).subscribe();
-        }, 2000);
+        }, 1000);
       } else {
         this.cartService.storeItemInSessionCart(item);
       }
@@ -135,11 +163,19 @@ export class CartComponent {
   
       // Creating a copy of the current item state
       const updatedItem = { ...item };
-      alert(item.quantity);
+      // alert(item.quantity);
   
       this.debounceIncrementTimer = setTimeout(() => {
-        this.cartService.updateCartItem(updatedItem).subscribe();
-      }, 2000);
+        this.cartService.updateCartItem(updatedItem).subscribe(
+          () => {
+            // alert("quantity updated");
+            console.log("Quantity updated");
+          },
+          error => {
+            console.log("Error while updating quantity", error);
+          }
+        );
+      }, 1000);
     } else {
       this.cartService.storeItemInSessionCart(item);
     }
@@ -148,10 +184,22 @@ export class CartComponent {
   removeCartItem(cartItem: CartItem) {
     this.cart.cartItems = this.cart.cartItems.filter(c => c.bookId != cartItem.bookId);
     if (!this.isLoggedIn) {
-      this.cartService.removeFromSessionCart(cartItem);
+      if(this.cartService.removeFromSessionCart(cartItem))
+          this.messageSerive.showMessage("Item removed successfully");
+      this.cart.totalPrice = this.calculateTotalPrice(this.cart.cartItems);
+      // this.cart.totalPrice = this.calculateTotalPrice(this.cartService.getSessionCart().forEach(cart));
     }
     else {
-      this.cartService.removeFromCart(cartItem.bookId);
+      this.cartService.removeFromCart(cartItem.bookId).subscribe(
+        () => {
+          this.messageSerive.showMessage("Item remved succcessfully");
+        },
+        (error)=>{
+          this.messageSerive.showMessage("Not able to remove items");
+          console.log("Error while removing items", error);
+        }
+      );
+      
     }
   }
 
@@ -177,18 +225,20 @@ export class CartComponent {
 
   clearCart() {
     if (!this.isLoggedIn) {
-      this.cartService.clearSessionCart();
-      this.cart = { cartItems: [], totalPrice: 0 };
-      alert("Your cart is cleared!");
+      if(this.cartService.clearSessionCart())
+      {
+        this.messageSerive.showMessage("Your cart is cleared!")
+        this.cart = { cartItems: [], totalPrice: 0 };
+      }
     } else {
       this.cartService.clearCart().subscribe(
         () => {
           this.cart = { cartItems: [], totalPrice: 0 };
-          alert("Your cart is cleared!");
+          this.messageSerive.showMessage("Your cart is cleared");
         },
         error => {
+          this.messageSerive.showMessage("Failed to clear cart");
           console.error('Failed to clear cart', error);
-          alert('Failed to clear cart');
         }
       );
     }

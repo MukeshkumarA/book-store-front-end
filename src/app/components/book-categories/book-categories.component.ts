@@ -6,6 +6,9 @@ import { Router } from '@angular/router';
 import { CommonService } from '../../common/common';
 import { BookCardComponent } from "../book-card/book-card.component";
 import { CartItem, CartService } from '../../services/cart.service';
+import { error } from 'console';
+import { UserNotLoggedInError } from '../../userNotLoggedInError';
+import { MessageService } from '../../services/message.service';
 
 @Component({
   selector: 'app-book-categories',
@@ -13,7 +16,6 @@ import { CartItem, CartService } from '../../services/cart.service';
   imports: [CommonModule, BookCardComponent],
   templateUrl: './book-categories.component.html',
   styleUrl: './book-categories.component.css',
-  providers: [BookService]
 })
 export class BookCategoriesComponent {
 
@@ -22,7 +24,9 @@ export class BookCategoriesComponent {
   bookGenres: string[] = [];
 
 
-  constructor(private bookService: BookService, private router: Router, private commonService: CommonService, private cartService: CartService) {}
+  constructor(private bookService: BookService, private router: Router, private commonService: CommonService, private cartService: CartService,
+    private messageService: MessageService
+  ) { }
 
   @ViewChild('books') booksContainer!: ElementRef;
 
@@ -43,24 +47,24 @@ export class BookCategoriesComponent {
 
   mapBooksWithGenre(books: Book[]) {
     books.forEach(book => {
-      if(this.booksGenre.has(book.genre.toLowerCase())){
+      if (this.booksGenre.has(book.genre.toLowerCase())) {
         const genreBooks = this.booksGenre.get(book.genre.toLowerCase());
         genreBooks?.push(book);
       }
-      else{
+      else {
         this.booksGenre.set(book.genre.toLowerCase(), [book]);
       }
     });
 
-    this.bookGenres = Array.from(this.booksGenre.keys()); 
+    this.bookGenres = Array.from(this.booksGenre.keys());
   }
 
   navigateToBookDetails(id: number) {
-    if(id)
+    if (id)
       this.router.navigate(['/book', id]);
   }
 
-  addBookToCart(book: Book){
+  addBookToCart(book: Book) {
     const cartItem: CartItem = {
       bookId: book.id as number,
       quantity: 1,
@@ -68,7 +72,15 @@ export class BookCategoriesComponent {
       totalPrice: book.price,
       title: book.title
     }
-    this.cartService.addToCart(cartItem);
+    this.cartService.addToCart(cartItem).subscribe(
+      () => this.messageService.showMessage('Item added to cart'),
+      error => {
+        if (error instanceof UserNotLoggedInError) {
+          this.messageService.showMessage('Item added to cart');
+          console.log("User not logged in");
+        }
+        console.log('Error adding item to cart', error)
+      });
   }
 
 

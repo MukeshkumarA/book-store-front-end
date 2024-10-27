@@ -13,6 +13,7 @@ import { User } from "./user.service";
   providedIn: 'root'
 })
 export class ApiService {
+
   private url = environment.apiUrl;
   private baseUrl = this.url + '/bookstore/api/v1';
 
@@ -69,7 +70,13 @@ export class ApiService {
   }  
 
   clearCart(): Observable<string> {
-    return this.httpClient.delete<string>(`${this.baseUrl}/cart/clearcart`);
+    // return this.httpClient.delete<string>(`${this.baseUrl}/cart/clearcart`);
+    return this.httpClient.delete(`${this.baseUrl}/cart/clearcart`, { responseType: 'text' });
+
+  }
+
+  createCart(userId: number): Observable<Cart> {
+    return this.httpClient.post<Cart>(`${this.baseUrl}/cart/create`, { userId });
   }
 
 }

@@ -23,7 +23,7 @@
         <div class="flex-1 border-2 border-[#c8bfbf] px-5 py-3 text-center rounded-sm hover:border-2 hover:border-[#77b748]"> {{ quantity }} </div>
         <div class=" border-2 border-[#c8bfbf] px-4 py-3 rounded-sm hover:border-none hover:cursor-pointer hover:bg-[#77b748] hover:text-white transition-all" (click)="addQuantity()"> + </div>
       </div>
-      <div class="w-[60%] mt-5 p-3 bg-[#77B748] text-center text-white rounded-lg cursor-pointer hover:opacity-2" (click)="addBookToCart(bookDetails)">
+      <div class="w-[60%] mt-5 p-3 bg-[#77B748] text-center text-white rounded-lg cursor-pointer hover:opacity-2" (click)="addBookToCart($event, bookDetails)">
         Add to cart
       </div>
     </div>
